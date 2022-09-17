@@ -28,3 +28,14 @@
 - learn MongoDB and try creating tables using Trello
 3. Need assistance / figure things out
 - MongoDB if I ever have issue with creating the tables
+
+2022/09/17 Louis
+1. Done / not done since last scrum:
+- updated proposal document
+- setup stories on Trello
+2. To do until next Scrum:
+- get familiar with github collaboration
+- (w:Ling)setup the initial project
+3. Need assistance / figure things out
+- using someone else's remote github
+- Get Xuan on the Trello
