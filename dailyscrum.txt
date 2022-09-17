@@ -18,4 +18,13 @@
 3. Need assistance / figure things out
 - MongoDB and how to use github
 
-
+2022/09/16 Xuan
+1. Done / not done since last scrum:
+- Attend the group discussion of the project topic and plan, discussed the tools we are going to use in the project
+- Designed and updated the ERD table after discussion with group members
+- Need to learn MongoDB and Frontend CSS framework 
+2. To do until next Scrum:
+- Building the project
+- learn MongoDB and try creating tables using Trello
+3. Need assistance / figure things out
+- MongoDB if I ever have issue with creating the tables
