@@ -39,3 +39,16 @@
 3. Need assistance / figure things out
 - using someone else's remote github
 - Get Xuan on the Trello
+
+2022/09/18 Louis
+1. Done / not done since last scrum:
+- familiarized with git/github
+- got Xuan on Trello
+- setup up initial project with Ling
+-started building a music player component
+2. To do until next Scrum:
+- setup up S3 bucket for audio files and photos
+- write down git team flow
+3. Need assistance / figure things out
+- team meeting around git flow
+- find out minimum functionnalities VS nice to haves
