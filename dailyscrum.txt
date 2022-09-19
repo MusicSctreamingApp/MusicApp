@@ -5,7 +5,7 @@
 
 
 
-2022/09/16 Ling
+2022/09/18 Ling
 1. Done / not done since last scrum:
 - Learn MongoDB, setup github
 - Need to learn aws
