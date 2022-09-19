@@ -1,6 +1,6 @@
 {
   "proxy": "http://localhost:4000",
-  "name": "ninja-mern-frontend",
+  "name": "musicapp-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
