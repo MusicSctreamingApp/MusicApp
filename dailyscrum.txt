@@ -14,7 +14,6 @@
 - Need a couple of audio files for testing
 - testing if I can successfully fetch the songID and userID from MongoDB database
 
-
 2022/09/18 Louis
 1. Done / not done since last scrum:
 - familiarized with git/github
