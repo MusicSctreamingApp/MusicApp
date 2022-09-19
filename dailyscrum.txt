@@ -3,6 +3,15 @@
 2. What I plan to do from this scrum to next? (next 24 hours)
 3. Where do I need assistance? What do I need to figure out?
 
+2022/09/19 Louis
+1. Done / not done since last scrum:
+- looked at AWS basics
+- invited team to MongoDB organisation
+2. To do until next Scrum:
+- update database schema
+- start creating API for album / playlist?Queue?
+3. Need assistance / figure things out
+- Getting team into mongoDB project
 -------------------------------------------------------------------------------------------------
 2022/09/18 Xuan
 1. Done / not done since last scrum:
