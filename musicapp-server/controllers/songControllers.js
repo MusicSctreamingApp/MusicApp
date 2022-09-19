@@ -3,9 +3,26 @@ const mongoose = require("mongoose");
 
 // GET ALL songs
 const getSongs = async (req, res) => {
-  const user_id = req.user._id;
   //the find method CAN be FILTERED...or sorted: here createdAt: -1 = Desc
   const songs = await Song.find().sort({ createdAt: -1 });
+
+  res.status(200).json(songs);
+};
+// GET ALL ALBUM  songs
+const getAlbumSongs = async (req, res) => {
+  const { album_id } = req.params;
+  //the find method CAN be FILTERED...or sorted: here createdAt: -1 = Desc
+  const songs = await Song.find({ album_id: album_id }).sort({ createdAt: -1 });
+
+  res.status(200).json(songs);
+};
+// GET ALL songs
+const getPlaylistSongs = async (req, res) => {
+  const { playlist_id } = req.params;
+  //the find method CAN be FILTERED...or sorted: here createdAt: -1 = Desc
+  const songs = await Song.find({ playlist_id: playlist_id }).sort({
+    createdAt: -1,
+  });
 
   res.status(200).json(songs);
 };
@@ -25,18 +42,18 @@ const getSong = async (req, res) => {
 };
 //CREATE new song
 const createSong = async (req, res) => {
-  const { title, load, reps } = req.body;
+  const { title, album_id, file_url } = req.body;
 
   let emptyFields = [];
   // TODO ***** ADJUST MODEL'S FIELDS ************************************************************
   if (!title) {
     emptyFields.push("title");
   }
-  if (!load) {
-    emptyFields.push("load");
+  if (!album_id) {
+    emptyFields.push("album_id");
   }
-  if (!reps) {
-    emptyFields.push("reps");
+  if (!file_url) {
+    emptyFields.push("file_url");
   }
   if (emptyFields.length > 0) {
     return res
@@ -45,8 +62,7 @@ const createSong = async (req, res) => {
   }
   //add doc / model to DB
   try {
-    const user_id = req.user._id;
-    const song = await Song.create({ title, load, reps, user_id });
+    const song = await Song.create({ title, album_id, file_url });
     res.status(201).json(song);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -87,6 +103,8 @@ module.exports = {
   createSong,
   getSong,
   getSongs,
+  getAlbumSongs,
+  getPlaylistSongs,
   deleteSong,
   updateSong,
 };

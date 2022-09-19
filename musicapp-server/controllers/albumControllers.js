@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 
 // GET ALL albums
 const getAlbums = async (req, res) => {
-  const user_id = req.user._id;
   //the find method CAN be FILTERED...or sorted: here createdAt: -1 = Desc
   const albums = await Album.find().sort({ createdAt: -1 });
 
@@ -33,10 +32,9 @@ const getAlbum = async (req, res) => {
 };
 //CREATE new album
 const createAlbum = async (req, res) => {
-  const { title, cover, artist } = req.body;
+  const { title, cover, artist, user_id } = req.body; // Should get user_id from AuthContext **
 
   let emptyFields = [];
-  // TODO ***** ADJUST MODEL'S FIELDS ************************************************************
   if (!title) {
     emptyFields.push("title");
   }
@@ -53,7 +51,7 @@ const createAlbum = async (req, res) => {
   }
   //add doc / model to DB
   try {
-    const user_id = req.user._id;
+    // const user_id = req.user._id; //Re-test with user in App ------------------------------------------------**
     const album = await Album.create({ title, cover, artist, user_id });
     res.status(201).json(album);
   } catch (err) {

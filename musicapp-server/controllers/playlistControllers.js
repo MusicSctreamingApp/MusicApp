@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 
 // GET ALL USER playlists
 const getPlaylists = async (req, res) => {
-  const user_id = req.user._id;
   //the find method CAN be FILTERED...or sorted: here createdAt: -1 = Desc
   const playlists = await Playlist.find()
     // .populate({ songs }) // NOT SURE THAT'S HOW IT WORKS-----------------------<<<
@@ -37,7 +36,7 @@ const getPlaylist = async (req, res) => {
 };
 //CREATE new playlist
 const createPlaylist = async (req, res) => {
-  const { title } = req.body;
+  const { title, user_id } = req.body; // ---------------------- remove user_id in body once tested again**
   //check fields filled?
   let emptyFields = [];
   if (!title) {
@@ -50,7 +49,7 @@ const createPlaylist = async (req, res) => {
   }
   //add doc / model to DB
   try {
-    const user_id = req.user._id;
+    // const user_id = req.user._id; --------------------------------------test again with from within app with auth**
     const playlist = await Playlist.create({ title, user_id });
     res.status(201).json(playlist);
   } catch (err) {
