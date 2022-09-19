@@ -5,6 +5,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const Navbar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
+  console.log("test");
 
   const handleClick = () => {
     logout();
