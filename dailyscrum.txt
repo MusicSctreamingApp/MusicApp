@@ -12,6 +12,17 @@
 - start creating API for album / playlist?Queue?
 3. Need assistance / figure things out
 - Getting team into mongoDB project
+
+2022/09/18 Ling
+1. Done / not done since last scrum:
+- Learn MongoDB, setup github
+- Need to learn aws
+2. To do until next Scrum:
+- Register aws account and figure out how to use S3
+- Begin some work related to upload files
+3. Need assistance / figure things out
+- how to merge project in github and only clone some file changed in main branch not the whole files 
+
 -------------------------------------------------------------------------------------------------
 2022/09/18 Xuan
 1. Done / not done since last scrum:
