@@ -11,9 +11,6 @@ const songSchema = new Schema({
     type: String,
     required: true,
   },
-  album_id: {
-    type: String,
-  },
   file_url: {
     type: String,
     required: true,
