@@ -50,7 +50,7 @@
 - setup the initial project
 3. Need assistance / figure things out
 - MongoDB and how to use github
--------------------------------------------------------------------------------------------------
+
 
 
 
@@ -64,6 +64,7 @@
 - learn MongoDB and try creating tables using Trello
 3. Need assistance / figure things out
 - MongoDB if I ever have issue with creating the tables
+-------------------------------------------------------------------------------------------------
 
 2022/09/17 Louis
 1. Done / not done since last scrum:
@@ -86,4 +87,5 @@
 - Testing and runthe initial project 
 3. Need assistance / figure things out
 - MongoDB if I ever have issue with creating the tables
+-------------------------------------------------------------------------------------------------
 
