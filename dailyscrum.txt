@@ -65,3 +65,22 @@
 3. Need assistance / figure things out
 - team meeting around git flow
 - find out minimum functionnalities VS nice to haves
+
+2022/09/17 Xuan
+1. Done / not done since last scrum:
+- familiarized with git/github
+- Ran through MERN tutorial and get familiar with the MongoDB and set up
+2. To do until next Scrum:
+- Testing and runthe initial project 
+3. Need assistance / figure things out
+- MongoDB if I ever have issue with creating the tables
+
+2022/09/18 Xuan
+1. Done / not done since last scrum:
+- Ran initial project and figure out the MongoDB database connection 
+- fixed the registry issue of the environment when installing hte node.js in the front end
+2. To do until next Scrum:
+- work on saving songs to the playlist
+3. Need assistance / figure things out
+- Need a couple of audio files for testing
+- testing if I can successfully fetch the songID and userID from MongoDB database
