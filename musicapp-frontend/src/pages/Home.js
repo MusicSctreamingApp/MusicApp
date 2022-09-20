@@ -11,7 +11,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchSongs = async () => {
-      const response = await fetch("/api/songs", {
+      const response = await fetch("/api/song/all", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
