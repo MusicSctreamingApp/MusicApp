@@ -55,6 +55,7 @@ const createSong = async (req, res) => {
   if (!file_url) {
     emptyFields.push("file_url");
   }
+  //add sending audio file to the S3 here
   if (emptyFields.length > 0) {
     return res
       .status(400)

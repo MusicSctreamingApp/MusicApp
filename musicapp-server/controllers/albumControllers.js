@@ -32,7 +32,7 @@ const getAlbum = async (req, res) => {
 };
 //CREATE new album
 const createAlbum = async (req, res) => {
-  const { title, cover, artist, user_id } = req.body; // Should get user_id from AuthContext **
+  const { title, cover, artist, user_id, songs } = req.body; // Should get user_id from AuthContext **
 
   let emptyFields = [];
   if (!title) {
@@ -52,7 +52,7 @@ const createAlbum = async (req, res) => {
   //add doc / model to DB
   try {
     // const user_id = req.user._id; //Re-test with user in App ------------------------------------------------**
-    const album = await Album.create({ title, cover, artist, user_id });
+    const album = await Album.create({ title, cover, artist, user_id, songs });
     res.status(201).json(album);
   } catch (err) {
     res.status(400).json({ error: err.message });
