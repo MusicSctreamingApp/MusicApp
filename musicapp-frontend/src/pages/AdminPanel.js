@@ -64,7 +64,7 @@ const AdminPanel = () => {
                   <th scope="col">email</th>
                   <th scope="col">role</th>
                   <th scope="col">Edit</th>
-                  <th scope="col">Ban</th>
+                  <th scope="col">Banned</th>
                 </tr>
               </thead>
               <tbody>
