@@ -1,6 +1,6 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-
+const mongoose = require("mongoose");
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
 };
@@ -38,12 +38,12 @@ const getUsers = async (req, res) => {
   try {
     const users = await User.find();
 
-    res.status(200).json(playlists);
+    res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error: err.message });
   }
 };
-//GET SINGLE Song by id
+//GET SINGLE user by id
 const getUser = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -72,7 +72,7 @@ const createAdmin = async (req, res) => {
         role: "ADMIN",
       }
     );
-    res.status(200).json(user);
+    res.status(200).json(admin);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

@@ -15,6 +15,7 @@ const requireAuth = async (req, res, next) => {
     const { _id } = jwt.verify(token, process.env.SECRET);
 
     req.user = await User.findOne({ _id }).select("_id");
+    //check for roles = ADMIN
     if (user.role !== "ADMIN") {
       res.status(401).json({ error: "Require Admin Priviledges." });
     }

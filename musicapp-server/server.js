@@ -17,7 +17,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/songs", workoutRoutes);
+app.use("/api/song", workoutRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/album", albumRoutes);
