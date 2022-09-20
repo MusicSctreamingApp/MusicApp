@@ -1,12 +1,12 @@
 require("dotenv").config();
-const { v4: uuidv4 } = require('uuid');
 const express = require("express");
 const mongoose = require("mongoose");
 
+const Album = require("./models/albumTest");
+const { v4: uuidv4 } = require('uuid');
 const fs = require('fs')
 const util = require('util')
 const unlinkFile = util.promisify(fs.unlink)
-
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -17,17 +17,22 @@ const storage = multer.diskStorage({
   }
 })
 const upload = multer({ storage })
-
 const { uploadFile, getFileStream } = require('./s3')
+
+// const albumTestRoutes = require("./routes/albumTestRoutes");
 
 const workoutRoutes = require("./routes/songs");
 const userRoutes = require("./routes/users");
-const albumTestRoutes = require("./routes/albumTestRoutes");
-const app = express();
 
+const app = express();
 
 //middle ware logging out requests coming in
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
+});
+
 app.use(express.urlencoded({ extended: true }));
 // Add headers before the routes are defined
 app.use(function (req, res, next) {
@@ -49,13 +54,13 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
+
 
 app.use("/api/songs", workoutRoutes);
 app.use("/api/user", userRoutes);
+
+// app.use("/api/albumtest", albumTestRoutes);
+
 app.use("/api/albumtest", upload.single('image'), async (req, res) => {
   const file = req.file;
   console.log(file);
@@ -63,9 +68,30 @@ app.use("/api/albumtest", upload.single('image'), async (req, res) => {
   const result = await uploadFile('images', file);
   await unlinkFile(file.path);
   console.log(result);
-  const description = req.body.description;
-  console.log(description);
-  res.send({ imagePath: `${result.Key}` });
+
+  const name = req.body.description;
+  const cover = result.Location
+  console.log(name);
+  //res.send({ imagePath: `${result.Key}` });
+
+  //add album to DB
+  try {
+
+    const album = await Album.create({ cover, name });
+    res.status(201).json(album);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+
+});
+
+app.use("/api/albumtest/all", async (req, res) => {
+
+  const albums = await Album.find().sort({ createdAt: -1 });
+
+  res.status(200).json(albums);
+
+
 });
 
 //connect to database

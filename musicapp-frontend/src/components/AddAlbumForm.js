@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import React from 'react'
 import axios from 'axios'
+import { useEffect, useState } from 'react';
 
 
 
@@ -13,11 +14,21 @@ async function postImage({ image, description }) {
 }
 
 
+
+
 function AddAlbumForm() {
 
   const [file, setFile] = useState()
   const [description, setDescription] = useState("")
   const [images, setImages] = useState([])
+  const [urls, setUrls] = useState([])
+
+  // useEffect(() => {
+  //   axios.get("http://localhost:4000/api/albumtest/all").then((response) => {
+  //     setUrls(response.data);
+  //   })
+  // }, []);
+
 
   const submit = async event => {
     event.preventDefault()
@@ -30,6 +41,7 @@ function AddAlbumForm() {
     setFile(file)
   }
 
+
   return (
     <div className="App">
       <form onSubmit={submit}>
@@ -37,12 +49,16 @@ function AddAlbumForm() {
         <input value={description} onChange={e => setDescription(e.target.value)} type="text"></input>
         <button type="submit">Submit</button>
       </form>
+      <div>
+        {urls.map((val) => (
+          <div >
+            <img src={val.cover}></img>
+          </div>
+        )
+        )
+        }
 
-      {images.map(image => (
-        <div key={image}>
-          <img src={image}></img>
-        </div>
-      ))}
+      </div>
 
 
 
