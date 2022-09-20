@@ -3,6 +3,23 @@
 2. What I plan to do from this scrum to next? (next 24 hours)
 3. Where do I need assistance? What do I need to figure out?
 
+2022/09/20 Xuan
+1. Done / not done since last scrum:
+- Testing the remote connection of the database and tried created table from remote
+- tested I can successfully fetch the songID and userID from MongoDB database
+- QCed the table creation scripts
+- Testing the backend routes under users
+- Coding on the front-end to add autherization to the user and admin
+
+2. To do until next Scrum:
+- Coding on the front-end to direct to the pages after user and admin login
+- Working on the home page to bring out the song list
+- Working on the admin page to have the functions for admin
+3. Need assistance / figure things out
+- how do we usually define the user or admin role when logging in
+
+-------------------------------------------------------------------------------------------------
+
 2022/09/19 Louis
 1. Done / not done since last scrum:
 - looked at AWS basics
@@ -21,7 +38,9 @@
 - Register aws account and figure out how to use S3
 - Begin some work related to upload files
 3. Need assistance / figure things out
-- How to merge project in github and only clone some file changed in main branch not the whole files 
+- How to merge project in github and only clone some file changed in main branch not the whole files
+
+
 
 -------------------------------------------------------------------------------------------------
 2022/09/18 Xuan
