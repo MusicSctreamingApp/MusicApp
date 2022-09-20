@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import AddAlbumForm from './components/AddAlbumForm'
 
 function App() {
   const { user } = useAuthContext()
@@ -14,18 +15,26 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
-            <Route 
+            <Route
               path='/'
               element={user ? <Home /> : <Navigate to='/login' />}
-            /> 
-            <Route 
+            />
+            <Route
               path='/login'
               element={!user ? <Login /> : <Navigate to='/' />}
-            /> 
-            <Route 
+            />
+            <Route
               path='/signup'
               element={!user ? <Signup /> : <Navigate to='/' />}
-            />          
+            />
+            <Route
+              path='/addalbum'
+              element={<AddAlbumForm />}
+            />
+            {/* <Route
+              path='/addalbum'
+              element={!user ? <AddAlbumForm /> : <Navigate to='/' />}
+            />*/}
           </Routes>
         </div>
       </BrowserRouter>
