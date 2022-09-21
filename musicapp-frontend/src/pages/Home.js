@@ -17,7 +17,6 @@ const Home = () => {
     //     },
     //   });
     //   const json = await response.json();
-
     //   if (response.ok) {
     //     dispatch({ type: "SET_SONGS", payload: json });
     //   }
@@ -33,9 +32,7 @@ const Home = () => {
     //   </div>
     // </div>
     <div className="home">
-      <div className="songs">
-        Hello
-      </div>
+      <div className="songs">Hello</div>
     </div>
   );
 };

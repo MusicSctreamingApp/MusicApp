@@ -1,27 +1,32 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const AdminPanel = () => {
-  const [state, setState] = useState([]);
+  const [users, setUser] = useState([]);
+  const { user } = useAuthContext();
   const handleSideBarButtons = () => {};
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/users"
-      );
+      console.log(user);
+      const response = await fetch("/api/admin/", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
       const json = await response.json();
 
       if (response.ok) {
-        setState(json);
+        setUser(json);
       }
     };
-    if (state) {
+    if (user) {
       fetchUsers();
     }
-  }, []);
+  }, [setUser, user]);
 
   return (
     <div className="container-fluid">
@@ -68,14 +73,20 @@ const AdminPanel = () => {
                 </tr>
               </thead>
               <tbody>
-              {user && user.map((user) => )}
-                <tr>
-                  <td>1,001</td>
-                  <td>random</td>
-                  <td>data</td>
-                  <td>placeholder</td>
-                  <td>text</td>
-                </tr>
+                {users &&
+                  users.map((users) => (
+                    <tr key={users._id}>
+                      <td>{users._id}</td>
+                      <td>{users.email}</td>
+                      <td>user role : {users.role}</td>
+                      <td>
+                        <button>Edit</button>
+                      </td>
+                      <td>
+                        <button>Delete / Ban </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
