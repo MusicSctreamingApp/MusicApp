@@ -10,27 +10,29 @@ const Home = () => {
   const { user } = useAuthContext();
 
   useEffect(() => {
-    const fetchSongs = async () => {
-      const response = await fetch("/api/song/all", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const json = await response.json();
-
-      if (response.ok) {
-        dispatch({ type: "SET_SONGS", payload: json });
-      }
-    };
-    if (user) {
-      fetchSongs();
-    }
+    // const fetchSongs = async () => {
+    //   const response = await fetch("/api/songs", {
+    //     headers: {
+    //       Authorization: `Bearer ${user.token}`,
+    //     },
+    //   });
+    //   const json = await response.json();
+    //   if (response.ok) {
+    //     dispatch({ type: "SET_SONGS", payload: json });
+    //   }
+    // };
+    // if (user) {
+    //   fetchSongs();
+    // }
   }, [dispatch, user]);
   return (
+    // <div className="home">
+    //   <div className="songs">
+    //     {songs && songs.map((song) => <SongsGrid key={song._id} song={song} />)}
+    //   </div>
+    // </div>
     <div className="home">
-      <div className="songs">
-        {songs && songs.map((song) => <SongsGrid key={song._id} song={song} />)}
-      </div>
+      <div className="songs">Hello</div>
     </div>
   );
 };
