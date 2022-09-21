@@ -14,7 +14,7 @@
 3. Need assistance / figure things out
 - I might need explanations on Axios (maybe!)
 
-2022/09/20 Xuan
+2022/09/21 Xuan
 1. Done / not done since last scrum:
 - Created dummy dataset of the album, playlist and songs for testing purpose
 - Coded on the front-end to add component (Add song forms) to display the songs in a form format
