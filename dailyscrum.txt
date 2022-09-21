@@ -3,6 +3,17 @@
 2. What I plan to do from this scrum to next? (next 24 hours)
 3. Where do I need assistance? What do I need to figure out?
 
+
+2022/09/21 Louis
+1. Done / not done since last scrum:
+- started on admin panel frontend page
+- fetch all users with authentication of admin role complete
+2. To do until next Scrum:
+- add admin panel protected route
+- add admin panel button 
+3. Need assistance / figure things out
+- I might need explanations on Axios (maybe!)
+------------------------------------------------------------------------------------------------
 2022/09/20 Louis
 1. Done / not done since last scrum:
 - backend API basics (still needs specific work)
