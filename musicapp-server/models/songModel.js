@@ -11,6 +11,9 @@ const songSchema = new Schema({
     type: String,
     required: true,
   },
+  playlist_id: {
+    type: String,
+  },
   file_url: {
     type: String,
     required: true,

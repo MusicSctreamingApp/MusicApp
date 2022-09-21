@@ -1,5 +1,5 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { useAuthContext } from './hooks/useAuthContext';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useAuthContext } from "./hooks/useAuthContext";
 //pages & components
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -8,10 +8,10 @@ import Signup from './pages/Signup'
 import AddAlbumForm from './components/AddAlbumForm'
 import MyAlbum from './components/MyAlbum'
 import AddSongForm from './components/AddSongForm';
-
+import AdminPanel from "./pages/AdminPanel";
 
 function App() {
-  const { user } = useAuthContext()
+  const { user } = useAuthContext();
   return (
     <div className="App">
       <BrowserRouter>
@@ -29,6 +29,10 @@ function App() {
             <Route
               path='/signup'
               element={!user ? <Signup /> : <Navigate to='/' />}
+            />
+            <Route
+              path="/AdminPanel"
+              element={!user ? <AdminPanel /> : <AdminPanel />}
             />
             <Route
               path='/addalbum'

@@ -7,6 +7,8 @@ const {
   createSong,
   getSongs,
   getSong,
+  getAlbumSongs,
+  getPlaylistSongs,
   deleteSong,
   updateSong,
 } = require("../controllers/songControllers");
@@ -14,7 +16,11 @@ const {
 const requireAuth = require("../middleware/requireAuth");
 router.use(requireAuth); //MAYBE NEED TO CHANGE SOME ROUTES WITHTOUT AUTH
 //routes
-router.get("/", getSongs);
+router.get("/all", getSongs);
+
+router.get("/album/:album_id", getAlbumSongs);
+
+router.get("/playlist/:playlist_id", getPlaylistSongs);
 
 router.get("/:id", getSong);
 

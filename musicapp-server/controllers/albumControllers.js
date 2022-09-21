@@ -1,80 +1,99 @@
-const Album = require("../models/albumTest");
+const Album = require("../models/albumModel");
 const mongoose = require("mongoose");
-const express = require("express");
 
-
-const { v4: uuidv4 } = require('uuid');
-const fs = require('../s3')
-const util = require('util')
-// const unlinkFile = util.promisify(fs.unlink)
-const multer = require('multer');
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/')
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${uuidv4()}.${file.originalname.split('.').pop()}`)
-  }
-})
-const upload = multer({ storage })
-const { uploadFile, getFileStream } = require('../s3')
-
-
-// GET ALL songs
+// GET ALL albums
 const getAlbums = async (req, res) => {
+  //the find method CAN be FILTERED...or sorted: here createdAt: -1 = Desc
+  const albums = await Album.find().sort({ createdAt: -1 });
 
+  res.status(200).json(albums);
 };
-//GET SINGLE Song by id
+// GET USER'S albums
+const getUserAlbums = async (req, res) => {
+  const user_id = req.user._id;
+  //the find method CAN be FILTERED...or sorted: here createdAt: -1 = Desc
+  const albums = await Album.find({ user_id }).sort({ createdAt: -1 });
+
+  res.status(200).json(albums);
+};
+//GET SINGLE Album by id
 const getAlbum = async (req, res) => {
-  res.status(200).json(song);
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(422).json({ error: "invalid ID" });
+  }
+
+  const album = await Album.findById(id);
+  //check if album by id exist (is not null)
+  if (!album) {
+    return res.status(404).json({ error: `album at id ${id} not found` });
+  }
+  res.status(200).json(album);
 };
-//CREATE new song
+//CREATE new album
+const createAlbum = async (req, res) => {
+  const { title, cover, artist, user_id, songs } = req.body; // Should get user_id from AuthContext **
 
-const createAlbum = (
-  upload.single('image'),
-  async (req, res) => {
-    const file = req.file;
-    console.log(req.files)
-    console.log(file)
-
-    const result = await uploadFile('images', file);
-    // FIXME: what if results says there was an error?
-    const res2 = await fs.unlinkFile(file.path);
-    // await unlinkFile(file.path);
-    console.log(result);
-
-    const name = req.body.description;
-    const cover = result.Location
-    console.log(name);
-    //res.send({ imagePath: `${result.Key}` });
-
-    //add album to DB
-    try {
-
-      const album = await Album.create({ cover, name });
-      res.status(201).json(album);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
-
-  });
-//DELETE a song
+  let emptyFields = [];
+  if (!title) {
+    emptyFields.push("title");
+  }
+  if (!cover) {
+    emptyFields.push("cover");
+  }
+  if (!artist) {
+    emptyFields.push("artist");
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill in all fields", emptyFields });
+  }
+  //add doc / model to DB
+  try {
+    // const user_id = req.user._id; //Re-test with user in App ------------------------------------------------**
+    const album = await Album.create({ title, cover, artist, user_id, songs });
+    res.status(201).json(album);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+//DELETE a album
 const deleteAlbum = async (req, res) => {
-
-  res.status(200).json(song);
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(422).json({ error: "invalid ID" });
+  }
+  const album = await Album.findOneAndDelete({ _id: id });
+  if (!album) {
+    return res.status(404).json({ error: `album at id ${id} not found` });
+  }
+  res.status(200).json(album);
 };
-//UPDATE a song
+//UPDATE a album
 const updateAlbum = async (req, res) => {
-
-  res.status(200).json(song);
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(422).json({ error: "invalid ID" });
+  }
+  //in update, use spread operator...to spread body fields inside request header
+  const album = await Album.findOneAndUpdate(
+    { _id: id },
+    {
+      ...req.body,
+    }
+  );
+  if (!album) {
+    return res.status(404).json({ error: `album at id ${id} not found` });
+  }
+  res.status(200).json(album);
 };
 //export routes
 module.exports = {
   createAlbum,
-  getAlbums,
+  getUserAlbums,
   getAlbum,
+  getAlbums,
   deleteAlbum,
   updateAlbum,
 };
-
-

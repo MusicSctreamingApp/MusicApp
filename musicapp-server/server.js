@@ -26,7 +26,9 @@ const { uploadFile, getFileStream } = require('./s3')
 
 const workoutRoutes = require("./routes/songs");
 const userRoutes = require("./routes/users");
-
+const adminRoutes = require("./routes/admins");
+const albumRoutes = require("./routes/albums");
+const playlistRoutes = require("./routes/playlists");
 const app = express();
 
 //middle ware logging out requests coming in
@@ -64,6 +66,9 @@ app.use(function (req, res, next) {
 
 app.use("/api/songs", workoutRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/album", albumRoutes);
+app.use("/api/playlist", playlistRoutes);
 
 // app.use("/api/albumtest", albumTestRoutes);
 
