@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import AddAlbumForm from './components/AddAlbumForm'
+import MyAlbums from './components/MyAlbums'
 import MyAlbum from './components/MyAlbum'
 import AddSongForm from './components/AddSongForm';
 import AdminPanel from "./pages/AdminPanel";
@@ -39,6 +40,12 @@ function App() {
               element={<AddAlbumForm />}
             />
 
+
+
+            <Route
+              path='/myalbums'
+              element={<MyAlbums />}
+            />
             <Route
               path='/myalbum'
               element={<MyAlbum />}

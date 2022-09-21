@@ -21,7 +21,7 @@ const Navbar = () => {
             <div>
               <span>{user.email}</span>
               <button onClick={handleClick}>Log Out</button>
-              <Link to="/myalbum"> My Album</Link>
+              <Link to="/myalbums"> My Albums</Link>
             </div>
           )}
           {!user && (

@@ -2,8 +2,14 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
+
+
+
+
 
 function AddAlbumForm() {
+  let navigate = useNavigate();
   const { user } = useAuthContext();
 
   const [title, setTitle] = useState("");
@@ -14,14 +20,23 @@ function AddAlbumForm() {
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
-  //async outside
-  async function postImage({ title, artist, image }) {
-    //param user_id deleted
+  async function postImage({ title, artist, image, user_id }) {
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("artist", artist);
-    formData.append("image", image);
-    // formData.append("user_id", user_id);
+    formData.append("title", title)
+    formData.append("artist", artist)
+    formData.append("image", image)
+    formData.append("user_id", user_id)
+
+    const result = await axios.post('http://localhost:4000/api/albumtest/', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${user.token}`,
+      }
+    })
+    return result.data
+  }
+
+
 
     //   const response = await fetch("/api/albumtest", {
     //     method: "POST",
@@ -57,19 +72,27 @@ function AddAlbumForm() {
 
     const result = await postImage({ title, artist, image: file });
     setImages([result.image, ...images]);
+    console.log(result);
     const json = await result.json;
 
+    // navigate("/myalbum");
+
     if (!result) {
-      setError(json.error);
-      setEmptyFields(json.emptyFields);
+      setError(result.error);
+      console.log(result.error);
+      setEmptyFields(result.emptyFields);
+      console.log(result.emptyFields);
     }
-    if (result.ok) {
+    if (result) {
+
       setEmptyFields([]);
       setTitle("");
       setArtist("");
       setFile("");
       setError(null);
       //dispatch({ type: "CREATE_SONG", payload: json });
+      //navigate("/myalbum");
+
     }
   };
 

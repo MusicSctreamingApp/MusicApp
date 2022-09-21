@@ -24,6 +24,17 @@
 - edit the App.js to set up the link of the redirection to the pages
 3. Need assistance / figure things out
 - working on the page layout
+
+2022/09/21 Ling
+1. Done / not done since last scrum:
+- Debug upload file from controller
+- Coded on Add Album Forms 
+2. To do until next Scrum:
+- Continue the my album page that show list of album, update,delete album.
+- Start coding add song page 
+3.Need assistance / figure things out
+- How to get user_id from fronten
+
 ------------------------------------------------------------------------------------------------
 2022/09/20 Louis
 1. Done / not done since last scrum:

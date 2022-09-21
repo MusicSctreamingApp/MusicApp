@@ -2,9 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const requireAuth = require("./middleware/requireAuth");
+
 const cors = require("cors");
-const User = require("./models/userModel");
-const jwt = require("jsonwebtoken");
+
 /*****************S3 bucket *****************************/
 
 const Album = require("./models/albumTest");
@@ -79,63 +79,73 @@ app.use("/api/playlist", playlistRoutes);
 // app.use("/api/albumtest", albumTestRoutes);
 
 /*****************S3 bucket *****************************/
-app.use("/api/albumtest", upload.single("image"), async (req, res) => {
-  const file = req.file;
-  //console.log(file);
+app.use(
+  "/api/albumtest",
+  requireAuth,
+  upload.single("image"),
+  async (req, res) => {
+    const file = req.file;
+    //console.log(file);
 
-  const result = await uploadFile("images", file);
-  await unlinkFile(file.path);
-  //console.log(result);
+    const result = await uploadFile("images", file);
+    await unlinkFile(file.path);
+    //console.log(result);
 
-  //authentication
-  const { authorization } = req.headers;
+    //authentication
+    const { authorization } = req.headers;
 
-  if (!authorization) {
-    return res.status(401).json({ error: "Authorization token required" });
+    if (!authorization) {
+      return res.status(401).json({ error: "Authorization token required" });
+    }
+
+    const token = authorization.split(" ")[1];
+
+    try {
+      const { _id } = jwt.verify(token, process.env.SECRET);
+
+      req.user = await User.findOne({ _id }).select("_id");
+      next();
+    } catch (err) {
+      console.log(err);
+      res.status(401).json({ error: "Request not authorized" });
+    }
+
+    const title = req.body.title;
+    const artist = req.body.artist;
+    const cover = result.Key;
+    const user_idt = req.user._id;
+    const user_id = req.user._id;
+    console.log(user_idt);
+
+    //console.log(name);
+    //res.send({ imagePath: `${result.Key}` });
+    let emptyFields = [];
+    if (!title) {
+      emptyFields.push("title");
+    }
+    if (!cover) {
+      emptyFields.push("cover");
+    }
+    if (!artist) {
+      emptyFields.push("artist");
+    }
+    if (emptyFields.length > 0) {
+      return res
+        .status(400)
+        .json({ error: "Please fill in all fields", emptyFields });
+    }
+
+    //add album to DB
+    //userid = findbyemail();
+
+    try {
+      const album = await Album.create({ title, artist, cover, user_id });
+      res.status(201).json(album);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
   }
-
-  const token = authorization.split(" ")[1];
-
-  try {
-    const { _id } = jwt.verify(token, process.env.SECRET);
-
-    req.user = await User.findOne({ _id }).select("_id");
-    next();
-  } catch (err) {
-    console.log(err);
-    res.status(401).json({ error: "Request not authorized" });
-  }
-
-  const title = req.body.title;
-  const artist = req.body.artist;
-  const cover = result.Key;
-  const user_id = req.user._id;
-  //console.log(name);
-  //res.send({ imagePath: `${result.Key}` });
-  let emptyFields = [];
-  if (!title) {
-    emptyFields.push("title");
-  }
-  if (!cover) {
-    emptyFields.push("cover");
-  }
-  if (!artist) {
-    emptyFields.push("artist");
-  }
-  if (emptyFields.length > 0) {
-    return res
-      .status(400)
-      .json({ error: "Please fill in all fields", emptyFields });
-  }
-
-  //add album to DB
-  try {
-    const album = await Album.create({ title, artist, cover, user_id });
-    res.status(201).json(album);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
+);
 /*****************S3 bucket end*****************************/
 
 app.use("/api/albumtest/all", async (req, res) => {
