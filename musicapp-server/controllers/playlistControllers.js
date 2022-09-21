@@ -37,7 +37,15 @@ const getPlaylist = async (req, res) => {
 };
 //CREATE new playlist
 const createPlaylist = async (req, res) => {
+<<<<<<< Updated upstream
   const { title } = req.body;
+=======
+<<<<<<< Updated upstream
+  const { title, user_id, songs } = req.body; // ---------------------- remove user_id in body once tested again**
+=======
+  const { title,user_id,songs } = req.body;
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
   //check fields filled?
   let emptyFields = [];
   if (!title) {
@@ -50,8 +58,18 @@ const createPlaylist = async (req, res) => {
   }
   //add doc / model to DB
   try {
+<<<<<<< Updated upstream
     const user_id = req.user._id;
     const playlist = await Playlist.create({ title, user_id });
+=======
+<<<<<<< Updated upstream
+    // const user_id = req.user._id; --------------------------------------test again with from within app with auth**
+    const playlist = await Playlist.create({ title, user_id, songs });
+=======
+     const user_id = req.user._id;
+    const playlist = await Playlist.create({ title, user_id,songs });
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     res.status(201).json(playlist);
   } catch (err) {
     res.status(400).json({ error: err.message });
