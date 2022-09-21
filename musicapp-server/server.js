@@ -1,6 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const requireAuth = require("./middleware/requireAuth");
+
+const cors = require('cors');
 
 /*****************S3 bucket *****************************/
 
@@ -33,6 +36,7 @@ const app = express();
 
 //middle ware logging out requests coming in
 app.use(express.json());
+app.use(cors());
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
@@ -73,7 +77,7 @@ app.use("/api/playlist", playlistRoutes);
 // app.use("/api/albumtest", albumTestRoutes);
 
 /*****************S3 bucket *****************************/
-app.use("/api/albumtest", upload.single('image'), async (req, res) => {
+app.use("/api/albumtest", requireAuth, upload.single('image'), async (req, res) => {
   const file = req.file;
   //console.log(file);
 
@@ -84,7 +88,11 @@ app.use("/api/albumtest", upload.single('image'), async (req, res) => {
   const title = req.body.title;
   const artist = req.body.artist;
   const cover = result.Key;
-  const user_id = req.body.user_id
+  const user_idt = req.user._id;
+  const user_id = req.user._id;
+  console.log(user_idt);
+
+
   //console.log(name);
   //res.send({ imagePath: `${result.Key}` });
   let emptyFields = [];
@@ -104,12 +112,15 @@ app.use("/api/albumtest", upload.single('image'), async (req, res) => {
   }
 
   //add album to DB
+  //userid = findbyemail();
+
   try {
 
     const album = await Album.create({ title, artist, cover, user_id });
     res.status(201).json(album);
   } catch (err) {
     res.status(400).json({ error: err.message });
+
   }
 
 });
