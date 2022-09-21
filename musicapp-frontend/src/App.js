@@ -6,6 +6,9 @@ import Home from './pages/Home';
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import AddAlbumForm from './components/AddAlbumForm'
+import MyAlbum from './components/MyAlbum'
+import AddSongForm from './components/AddSongForm';
+
 
 function App() {
   const { user } = useAuthContext()
@@ -30,6 +33,15 @@ function App() {
             <Route
               path='/addalbum'
               element={<AddAlbumForm />}
+            />
+
+            <Route
+              path='/myalbum'
+              element={<MyAlbum />}
+            />
+            <Route
+              path='/addsong'
+              element={<AddSongForm />}
             />
             {/* <Route
               path='/addalbum'

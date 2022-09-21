@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 
+/*****************S3 bucket *****************************/
+
 const Album = require("./models/albumTest");
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs')
@@ -18,6 +20,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 const { uploadFile, getFileStream } = require('./s3')
+/*****************S3 bucket end*****************************/
 
 // const albumTestRoutes = require("./routes/albumTestRoutes");
 
@@ -33,6 +36,7 @@ app.use((req, res, next) => {
   next();
 });
 
+/*****************S3 bucket *****************************/
 app.use(express.urlencoded({ extended: true }));
 // Add headers before the routes are defined
 app.use(function (req, res, next) {
@@ -53,6 +57,8 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
+/*****************S3 bucket end*****************************/
+
 
 
 
@@ -61,29 +67,48 @@ app.use("/api/user", userRoutes);
 
 // app.use("/api/albumtest", albumTestRoutes);
 
+/*****************S3 bucket *****************************/
 app.use("/api/albumtest", upload.single('image'), async (req, res) => {
   const file = req.file;
-  console.log(file);
+  //console.log(file);
 
   const result = await uploadFile('images', file);
   await unlinkFile(file.path);
-  console.log(result);
+  //console.log(result);
 
-  const name = req.body.description;
-  const cover = result.Location
-  console.log(name);
+  const title = req.body.title;
+  const artist = req.body.artist;
+  const cover = result.Key;
+  const user_id = req.body.user_id
+  //console.log(name);
   //res.send({ imagePath: `${result.Key}` });
+  let emptyFields = [];
+  if (!title) {
+    emptyFields.push("title");
+  }
+  if (!cover) {
+    emptyFields.push("cover");
+  }
+  if (!artist) {
+    emptyFields.push("artist");
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill in all fields", emptyFields });
+  }
 
   //add album to DB
   try {
 
-    const album = await Album.create({ cover, name });
+    const album = await Album.create({ title, artist, cover, user_id });
     res.status(201).json(album);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 
 });
+/*****************S3 bucket end*****************************/
 
 app.use("/api/albumtest/all", async (req, res) => {
 
