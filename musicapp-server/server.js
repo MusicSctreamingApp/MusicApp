@@ -1,25 +1,28 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-
+const requireAuth = require("./middleware/requireAuth");
+const cors = require("cors");
+const User = require("./models/userModel");
+const jwt = require("jsonwebtoken");
 /*****************S3 bucket *****************************/
 
 const Album = require("./models/albumTest");
-const { v4: uuidv4 } = require('uuid');
-const fs = require('fs')
-const util = require('util')
-const unlinkFile = util.promisify(fs.unlink)
-const multer = require('multer');
+const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
+const util = require("util");
+const unlinkFile = util.promisify(fs.unlink);
+const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, `${uuidv4()}.${file.originalname.split('.').pop()}`)
-  }
-})
-const upload = multer({ storage })
-const { uploadFile, getFileStream } = require('./s3')
+    cb(null, `${uuidv4()}.${file.originalname.split(".").pop()}`);
+  },
+});
+const upload = multer({ storage });
+const { uploadFile, getFileStream } = require("./s3");
 /*****************S3 bucket end*****************************/
 
 // const albumTestRoutes = require("./routes/albumTestRoutes");
@@ -33,6 +36,7 @@ const app = express();
 
 //middle ware logging out requests coming in
 app.use(express.json());
+app.use(cors());
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
@@ -42,27 +46,29 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: true }));
 // Add headers before the routes are defined
 app.use(function (req, res, next) {
-
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
 
   // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
 
   // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
 
   // Set to true if you need the website to include cookies in the requests sent
   // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader("Access-Control-Allow-Credentials", true);
 
   // Pass to next layer of middleware
   next();
 });
 /*****************S3 bucket end*****************************/
-
-
-
 
 app.use("/api/songs", workoutRoutes);
 app.use("/api/user", userRoutes);
@@ -73,18 +79,37 @@ app.use("/api/playlist", playlistRoutes);
 // app.use("/api/albumtest", albumTestRoutes);
 
 /*****************S3 bucket *****************************/
-app.use("/api/albumtest", upload.single('image'), async (req, res) => {
+app.use("/api/albumtest", upload.single("image"), async (req, res) => {
   const file = req.file;
   //console.log(file);
 
-  const result = await uploadFile('images', file);
+  const result = await uploadFile("images", file);
   await unlinkFile(file.path);
   //console.log(result);
+
+  //authentication
+  const { authorization } = req.headers;
+
+  if (!authorization) {
+    return res.status(401).json({ error: "Authorization token required" });
+  }
+
+  const token = authorization.split(" ")[1];
+
+  try {
+    const { _id } = jwt.verify(token, process.env.SECRET);
+
+    req.user = await User.findOne({ _id }).select("_id");
+    next();
+  } catch (err) {
+    console.log(err);
+    res.status(401).json({ error: "Request not authorized" });
+  }
 
   const title = req.body.title;
   const artist = req.body.artist;
   const cover = result.Key;
-  const user_id = req.body.user_id
+  const user_id = req.user._id;
   //console.log(name);
   //res.send({ imagePath: `${result.Key}` });
   let emptyFields = [];
@@ -105,23 +130,18 @@ app.use("/api/albumtest", upload.single('image'), async (req, res) => {
 
   //add album to DB
   try {
-
     const album = await Album.create({ title, artist, cover, user_id });
     res.status(201).json(album);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
-
 });
 /*****************S3 bucket end*****************************/
 
 app.use("/api/albumtest/all", async (req, res) => {
-
   const albums = await Album.find().sort({ createdAt: -1 });
 
   res.status(200).json(albums);
-
-
 });
 
 //connect to database

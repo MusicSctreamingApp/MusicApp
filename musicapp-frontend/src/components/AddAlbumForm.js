@@ -1,23 +1,7 @@
-
-import React from 'react'
-import axios from 'axios'
-import { useState } from 'react';
+import React from "react";
+import axios from "axios";
+import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
-
-
-async function postImage({ title, artist, image, user_id }) {
-  const formData = new FormData();
-  formData.append("title", title)
-  formData.append("artist", artist)
-  formData.append("image", image)
-  formData.append("user_id", user_id)
-
-  const result = await axios.post('http://localhost:4000/api/albumtest/', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-  return result.data
-}
-
-
-
 
 function AddAlbumForm() {
   const { user } = useAuthContext();
@@ -25,14 +9,45 @@ function AddAlbumForm() {
   const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
   const [file, setFile] = useState();
-  const [user_id, setUserId] = useState("");
+  // const [user_id, setUserId] = useState("");
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
+  //async outside
+  async function postImage({ title, artist, image }) {
+    //param user_id deleted
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("artist", artist);
+    formData.append("image", image);
+    // formData.append("user_id", user_id);
 
+    //   const response = await fetch("/api/albumtest", {
+    //     method: "POST",
+    //     body: formData,
+    //     headers: {
+    //       Authorization: `Bearer ${user.token}`,
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   }).then((res) => res.json());
+    //   const json = await response.json();
 
-  const submit = async event => {
+    //   if (response.ok) {
+    //     setImages(json);
+    //   }
+    // }
+
+    const result = await axios.post("/api/albumtest/", formData, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return result.data;
+  }
+  // end async outside
+  const submit = async (event) => {
     event.preventDefault();
 
     if (!user) {
@@ -40,11 +55,11 @@ function AddAlbumForm() {
       return;
     }
 
-    const result = await postImage({ title, artist, image: file, user_id })
+    const result = await postImage({ title, artist, image: file });
     setImages([result.image, ...images]);
     const json = await result.json;
 
-    if (!result.ok) {
+    if (!result) {
       setError(json.error);
       setEmptyFields(json.emptyFields);
     }
@@ -56,19 +71,16 @@ function AddAlbumForm() {
       setError(null);
       //dispatch({ type: "CREATE_SONG", payload: json });
     }
+  };
 
-
-  }
-
-  const fileSelected = event => {
-    const file = event.target.files[0]
-    setFile(file)
-  }
-
+  const fileSelected = (event) => {
+    const file = event.target.files[0];
+    setFile(file);
+  };
 
   return (
     <div className="App app">
-      <h3 className="center" >Add a new album</h3>
+      <h3 className="center">Add a new album</h3>
 
       <form onSubmit={submit}>
         <label htmlFor="title">Album Title:</label>
@@ -93,27 +105,23 @@ function AddAlbumForm() {
 
         <label htmlFor="cover">Cover Picture:</label>
         <input onChange={fileSelected} type="file" accept="image/*"></input>
-        <input value={user_id} onChange={e => setUserId(e.target.value)} type="text" placeholder="user_id"></input>
+        {/* <input
+          value={user_id}
+          onChange={(e) => setUserId(e.target.value)}
+          type="text"
+          placeholder="user_id"
+        ></input> */}
         <div className="center">
-
           <button type="submit">Add New Album</button>
         </div>
         {error && <div className="error">{error}</div>}
       </form>
-      <div>
-
-
-      </div>
-
-
+      <div></div>
     </div>
   );
 }
 
 export default AddAlbumForm;
-
-
-
 
 // import { useState } from "react";
 // import { useAlbumsContext } from "../hooks/useAlbumsContext";
@@ -219,7 +227,6 @@ export default AddAlbumForm;
 //         className={emptyFields.includes("artist") ? "error" : ""}
 //       />
 
-
 //       <label htmlFor="cover">Excercise Reps:</label>
 //       <input
 //         onChange={fileSelected}
@@ -228,7 +235,6 @@ export default AddAlbumForm;
 //         className={emptyFields.includes("cover") ? "error" : ""}
 //       ></input>
 
-
 //       <button>Add Album</button>
 //       {error && <div className="error">{error}</div>}
 //     </form>
@@ -236,10 +242,3 @@ export default AddAlbumForm;
 // };
 
 // export default AddAlbumForm;
-
-
-
-
-
-
-
