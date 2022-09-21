@@ -13,6 +13,16 @@
 - add admin panel button 
 3. Need assistance / figure things out
 - I might need explanations on Axios (maybe!)
+
+2022/09/21 Ling
+1. Done / not done since last scrum:
+- Code add album frontend page
+- Debug upload file from controller
+2. To do until next Scrum:
+- Code add song page
+- Code my album page that can fetch all the album, update and delete album.
+3. Need assistance / figure things out
+- Need to know how to get user_id when logging in. And discussing abou album table. When wo create album, how to save song array. 
 ------------------------------------------------------------------------------------------------
 2022/09/20 Louis
 1. Done / not done since last scrum:
