@@ -6,7 +6,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const AdminPanel = () => {
   const [users, setUser] = useState([]);
   const { user } = useAuthContext();
-  const handleSideBarButtons = () => {};
+  const handleSideBarButtons = () => { };
 
   useEffect(() => {
     const fetchUsers = async () => {

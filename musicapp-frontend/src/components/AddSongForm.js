@@ -4,17 +4,19 @@ import axios from 'axios'
 import { useState } from 'react';
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
 
 
 
 function AddSongForm() {
+  const { id } = useParams();
+  const albumId = id;
   let navigate = useNavigate();
   const { user } = useAuthContext();
 
   const [title, setTitle] = useState("");
-  const [albumId, setAlbumId] = useState("");
   const [file, setFile] = useState();
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
@@ -60,11 +62,10 @@ function AddSongForm() {
 
       setEmptyFields([]);
       setTitle("");
-      setAlbumId("");
       setFile("");
       setError(null);
       //dispatch({ type: "CREATE_SONG", payload: json });
-      navigate("/myalbum");
+      navigate(`/myalbum/${albumId}`);
 
     }
 
@@ -82,6 +83,8 @@ function AddSongForm() {
       <h3 className="center" >Add a new song</h3>
 
       <form onSubmit={submit}>
+
+
         <label htmlFor="title">Song Title:</label>
         <input
           type="text"
@@ -92,15 +95,7 @@ function AddSongForm() {
           className={emptyFields.includes("title") ? "error" : ""}
         />
 
-        <label htmlFor="artist">Album ID</label>
-        <input
-          type="text"
-          name="albumId"
-          id="albumId"
-          onChange={(e) => setAlbumId(e.target.value)}
-          value={albumId}
-          className={emptyFields.includes("albumId") ? "error" : ""}
-        />
+
 
         <label htmlFor="song">Song:</label>
         <input onChange={fileSelected} type="file" accept="image/*"></input>

@@ -47,11 +47,11 @@ function App() {
               element={<MyAlbums />}
             />
             <Route
-              path='/myalbum'
+              path='/myalbum/:id'
               element={<MyAlbum />}
             />
             <Route
-              path='/addsong'
+              path='/addsong/:id'
               element={<AddSongForm />}
             />
             {/* <Route
