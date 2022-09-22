@@ -9,11 +9,11 @@ const cors = require("cors");
 
 const Album = require("./models/albumModel");
 const Song = require("./models/songModel");
-const { v4: uuidv4 } = require('uuid');
-const fs = require('fs')
-const util = require('util')
-const unlinkFile = util.promisify(fs.unlink)
-const multer = require('multer');
+const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
+const util = require("util");
+const unlinkFile = util.promisify(fs.unlink);
+const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -92,12 +92,10 @@ app.use(
     await unlinkFile(file.path);
     //console.log(result);
 
-  const title = req.body.title;
-  const artist = req.body.artist;
-  const cover = result.Key;
-  const user_id = req.user._id;
-
-
+    const title = req.body.title;
+    const artist = req.body.artist;
+    const cover = result.Key;
+    const user_id = req.user._id;
 
     //console.log(name);
     //res.send({ imagePath: `${result.Key}` });
@@ -126,80 +124,78 @@ app.use(
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
-  }
-  if (!cover) {
-    emptyFields.push("cover");
-  }
-  if (!artist) {
-    emptyFields.push("artist");
-  }
-  if (emptyFields.length > 0) {
-    return res
-      .status(400)
-      .json({ error: "Please fill in all fields", emptyFields });
-  }
 
-  //add album to DB
+    if (!cover) {
+      emptyFields.push("cover");
+    }
+    if (!artist) {
+      emptyFields.push("artist");
+    }
+    if (emptyFields.length > 0) {
+      return res
+        .status(400)
+        .json({ error: "Please fill in all fields", emptyFields });
+    }
 
-  try {
+    //add album to DB
 
-    const album = await Album.create({ title, artist, cover, user_id });
-    res.status(201).json(album);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-
+    try {
+      const album = await Album.create({ title, artist, cover, user_id });
+      res.status(201).json(album);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
   }
-
-});
+);
 
 // add new song
-app.use("/api/createsong", requireAuth, upload.single('image'), async (req, res) => {
-  const file = req.file;
-  console.log(file);
+app.use(
+  "/api/createsong",
+  requireAuth,
+  upload.single("image"),
+  async (req, res) => {
+    const file = req.file;
+    console.log(file);
 
-  const result = await uploadFile('songs', file);
-  await unlinkFile(file.path);
-  //console.log(result);
+    const result = await uploadFile("songs", file);
+    await unlinkFile(file.path);
+    //console.log(result);
 
-  const title = req.body.title;
-  const album_id = req.body.albumId;
+    const title = req.body.title;
+    const album_id = req.body.albumId;
 
-  const file_url = result.Key;
+    const file_url = result.Key;
 
+    //console.log(name);
+    //res.send({ imagePath: `${result.Key}` });
+    let emptyFields = [];
+    if (!title) {
+      emptyFields.push("title");
+    }
+    if (!album_id) {
+      emptyFields.push("albumId");
+    }
+    if (!file_url) {
+      emptyFields.push("image");
+    }
+    if (emptyFields.length > 0) {
+      return res
+        .status(400)
+        .json({ error: "Please fill in all fields", emptyFields });
+    }
 
-  //console.log(name);
-  //res.send({ imagePath: `${result.Key}` });
-  let emptyFields = [];
-  if (!title) {
-    emptyFields.push("title");
+    //add song to DB
+
+    try {
+      const song = await Song.create({ title, album_id, file_url });
+      res.status(201).json(song);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
   }
-  if (!album_id) {
-    emptyFields.push("albumId");
-  }
-  if (!file_url) {
-    emptyFields.push("image");
-  }
-  if (emptyFields.length > 0) {
-    return res
-      .status(400)
-      .json({ error: "Please fill in all fields", emptyFields });
-  }
-
-  //add song to DB
-
-  try {
-
-    const song = await Song.create({ title, album_id, file_url });
-    res.status(201).json(song);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-
-  }
-
-});
+);
 
 /*****************S3 bucket end*****************************/
-
 
 // try to get all albums here but not working
 // app.use("/api/albumtest/all", requireAuth, async (req, res) => {
@@ -215,7 +211,6 @@ app.use("/api/createsong", requireAuth, upload.single('image'), async (req, res)
 
 //   }
 // });
-
 
 //connect to database
 mongoose
