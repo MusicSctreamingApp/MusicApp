@@ -59,13 +59,13 @@ function AddSongForm() {
 
     // navigate("/myalbum");
 
-    if (!result) {
-      setError(result.error);
-      console.log(result.error);
-      setEmptyFields(result.emptyFields);
-      console.log(result.emptyFields);
+    if (!response.ok) {
+      setError(json.error);
+      console.log(json.error);
+      setEmptyFields(json.emptyFields);
+      console.log(json.emptyFields);
     }
-    if (result) {
+    if (response.ok) {
       setEmptyFields([]);
       setTitle("");
       setAlbumId("");
@@ -79,7 +79,7 @@ function AddSongForm() {
 
   const fileSelected = (event) => {
     const file = event.target.files[0];
-    setFile(file);
+    setFileURL(file);
   };
 
   return (
