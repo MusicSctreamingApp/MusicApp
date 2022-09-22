@@ -16,17 +16,15 @@ function AddAlbumForm() {
   const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
   const [file, setFile] = useState();
-  const [user_id, setUserId] = useState("");
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
-  async function postImage({ title, artist, image, user_id }) {
+  async function postImage({ title, artist, image }) {
     const formData = new FormData();
     formData.append("title", title)
     formData.append("artist", artist)
     formData.append("image", image)
-    formData.append("user_id", user_id)
 
     const result = await axios.post('http://localhost:4000/api/albumtest/', formData, {
       headers: {
@@ -37,9 +35,6 @@ function AddAlbumForm() {
     return result.data
   }
 
-
-
-
   const submit = async event => {
     event.preventDefault();
 
@@ -48,9 +43,9 @@ function AddAlbumForm() {
       return;
     }
 
-    const result = await postImage({ title, artist, image: file, user_id })
+    const result = await postImage({ title, artist, image: file })
     setImages([result.image, ...images]);
-    console.log(result);
+    //console.log(result);
     const json = await result.json;
 
     // navigate("/myalbum");
@@ -69,7 +64,7 @@ function AddAlbumForm() {
       setFile("");
       setError(null);
       //dispatch({ type: "CREATE_SONG", payload: json });
-      //navigate("/myalbum");
+      navigate("/myalbum");
 
     }
 
@@ -109,7 +104,7 @@ function AddAlbumForm() {
 
         <label htmlFor="cover">Cover Picture:</label>
         <input onChange={fileSelected} type="file" accept="image/*"></input>
-        <input value={user_id} onChange={e => setUserId(e.target.value)} type="text" placeholder="user_id"></input>
+
         <div className="center">
 
           <button type="submit">Add New Album</button>
