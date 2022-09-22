@@ -5,6 +5,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 
 function AddAlbumForm() {
+  // just test
   let navigate = useNavigate();
   const { user } = useAuthContext();
 
