@@ -1,0 +1,12 @@
+2022/09/22 Ling
+1. Done / not done since last scrum:
+- Coding myalbums,myalbum, addsong pages.
+- Fetch all albums with authentication from database.
+- Coding create song backend.
+- Fetch the album id for creating songs.
+
+2. To do until next Scrum:
+- Add CSS to myalbums page and album page.
+- Crud of album and song.
+3. Need assistance / figure things out
+- Might looking at how to host our app online.
