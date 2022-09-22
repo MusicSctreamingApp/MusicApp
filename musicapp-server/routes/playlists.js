@@ -12,8 +12,8 @@ const {
   updatePlaylist,
 } = require("../controllers/playlistControllers");
 //authentication middleware for all playlist routes
-const requireAuth = require("../middleware/requireAuth");
-router.use(requireAuth); //MAYBE NEED TO CHANGE SOME ROUTES WITHTOUT AUTH
+// const requireAuth = require("../middleware/requireAuth");
+// router.use(requireAuth); //MAYBE NEED TO CHANGE SOME ROUTES WITHTOUT AUTH
 //routes
 router.get("/all", getPlaylists);
 

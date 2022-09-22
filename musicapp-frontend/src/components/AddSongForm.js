@@ -1,14 +1,9 @@
-
-import React from 'react'
-import axios from 'axios'
-import { useState } from 'react';
+import React from "react";
+import axios from "axios";
+import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-
-
-
-
 
 function AddSongForm() {
   const { id } = useParams();
@@ -17,38 +12,50 @@ function AddSongForm() {
   const { user } = useAuthContext();
 
   const [title, setTitle] = useState("");
-  const [file, setFile] = useState();
-  const [images, setImages] = useState([]);
-  const [error, setError] = useState(null);
+  const [album_id, setAlbumId] = useState("");
+  const [file_url, setFileURL] = useState("");
+  const [playlist_id, setPlaylistID] = useState("");
   const [emptyFields, setEmptyFields] = useState([]);
+  const [error, setError] = useState(null);
+  // const [emptyFields, setEmptyFields] = useState([]);
 
   async function postImage({ title, albumId, image }) {
     const formData = new FormData();
-    formData.append("title", title)
-    formData.append("albumId", albumId)
-    formData.append("image", image)
+    formData.append("title", title);
+    formData.append("albumId", albumId);
+    formData.append("image", image);
 
-    const result = await axios.post('http://localhost:4000/api/createsong/', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${user.token}`,
+    const result = await axios.post(
+      "http://localhost:4000/api/createsong/",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user.token}`,
+        },
       }
-    })
-    return result.data
+    );
+    return result.data;
   }
 
-  const submit = async event => {
+  const submit = async (event) => {
     event.preventDefault();
 
     if (!user) {
       setError("You must be logged in");
       return;
     }
-
-    const result = await postImage({ title, albumId, image: file })
-    setImages([result.image, ...images]);
-    //console.log(result);
-    const json = await result.json;
+    // const song = { title, load, reps };
+    const song = { title, album_id, file_url, playlist_id };
+    const response = await fetch("/api/songs", {
+      method: "POST",
+      body: JSON.stringify(song),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    const json = await response.json();
 
     // navigate("/myalbum");
 
@@ -59,33 +66,27 @@ function AddSongForm() {
       console.log(result.emptyFields);
     }
     if (result) {
-
       setEmptyFields([]);
       setTitle("");
-      setFile("");
+      setAlbumId("");
+      setFileURL("");
+      setPlaylistID("");
       setError(null);
       //dispatch({ type: "CREATE_SONG", payload: json });
       navigate(`/myalbum/${albumId}`);
-
     }
+  };
 
-
-  }
-
-  const fileSelected = event => {
-    const file = event.target.files[0]
-    setFile(file)
-  }
-
+  const fileSelected = (event) => {
+    const file = event.target.files[0];
+    setFile(file);
+  };
 
   return (
     <div className="App app">
-      <h3 className="center" >Add a new song</h3>
-
-      <form onSubmit={submit}>
-
-
-        <label htmlFor="title">Song Title:</label>
+      <h3 className="center">Add a new song</h3>
+      <form>
+        <label htmlFor="title">Title of the Song:</label>
         <input
           type="text"
           name="title"
@@ -95,29 +96,40 @@ function AddSongForm() {
           className={emptyFields.includes("title") ? "error" : ""}
         />
 
-
+        {/* <label htmlFor="Album_id">Album:</label>
+      <input
+        type="text"
+        name="album"
+        id="album"
+        onChange={(e) => setAlbumId(e.target.value)}
+        value={album_id}
+        className={emptyFields.includes("albumID") ? "error" : ""}
+      /> 
+ 
+      <label htmlFor="reps">PlayList:</label>
+      <input
+        type="text"
+        name="reps"
+        id="reps"
+        onChange={(e) => setReps(e.target.value)}
+        value={reps}
+        className={emptyFields.includes("reps") ? "error" : ""}
+      />  */}
 
         <label htmlFor="song">Song:</label>
         <input onChange={fileSelected} type="file" accept="image/*"></input>
 
         <div className="center">
-
           <button type="submit">Add New Album</button>
         </div>
         {error && <div className="error">{error}</div>}
       </form>
-      <div>
-
-
-      </div>
-
-
+      <div></div>
     </div>
   );
 }
 
 export default AddSongForm;
-
 
 // import { useState } from "react";
 // import { useSongsContext } from "../hooks/useSongsContext";

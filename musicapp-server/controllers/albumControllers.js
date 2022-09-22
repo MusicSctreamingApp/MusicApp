@@ -32,7 +32,19 @@ const getAlbum = async (req, res) => {
 };
 //CREATE new album
 const createAlbum = async (req, res) => {
+<<<<<<< HEAD
   const { title, cover, artist, user_id, songs } = req.body; // Should get user_id from AuthContext **
+=======
+<<<<<<< Updated upstream
+  const { title, cover, artist } = req.body;
+=======
+<<<<<<< Updated upstream
+  const { title, cover, artist, user_id, songs } = req.body; // Should get user_id from AuthContext **
+=======
+  const { title, cover, artist} = req.body;
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Xuan
 
   let emptyFields = [];
   if (!title) {
