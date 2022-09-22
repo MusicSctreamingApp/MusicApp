@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const requireAuth = require("./middleware/requireAuth");
 
-const cors = require('cors');
+const cors = require("cors");
 
 /*****************S3 bucket *****************************/
 
@@ -16,14 +16,14 @@ const unlinkFile = util.promisify(fs.unlink)
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, `${uuidv4()}.${file.originalname.split('.').pop()}`)
-  }
-})
-const upload = multer({ storage })
-const { uploadFile, getFileStream } = require('./s3')
+    cb(null, `${uuidv4()}.${file.originalname.split(".").pop()}`);
+  },
+});
+const upload = multer({ storage });
+const { uploadFile, getFileStream } = require("./s3");
 /*****************S3 bucket end*****************************/
 
 // const albumTestRoutes = require("./routes/albumTestRoutes");
@@ -47,27 +47,29 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: true }));
 // Add headers before the routes are defined
 app.use(function (req, res, next) {
-
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
 
   // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
 
   // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
 
   // Set to true if you need the website to include cookies in the requests sent
   // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader("Access-Control-Allow-Credentials", true);
 
   // Pass to next layer of middleware
   next();
 });
 /*****************S3 bucket end*****************************/
-
-
-
 
 app.use("/api/songs", workoutRoutes);
 app.use("/api/user", userRoutes);
@@ -78,13 +80,17 @@ app.use("/api/playlist", playlistRoutes);
 // app.use("/api/albumtest", albumTestRoutes);
 
 /*****************S3 bucket *****************************/
-app.use("/api/albumtest", requireAuth, upload.single('image'), async (req, res) => {
-  const file = req.file;
-  //console.log(file);
+app.use(
+  "/api/albumtest",
+  requireAuth,
+  upload.single("image"),
+  async (req, res) => {
+    const file = req.file;
+    //console.log(file);
 
-  const result = await uploadFile('images', file);
-  await unlinkFile(file.path);
-  //console.log(result);
+    const result = await uploadFile("images", file);
+    await unlinkFile(file.path);
+    //console.log(result);
 
   const title = req.body.title;
   const artist = req.body.artist;
@@ -93,12 +99,33 @@ app.use("/api/albumtest", requireAuth, upload.single('image'), async (req, res) 
 
 
 
+    //console.log(name);
+    //res.send({ imagePath: `${result.Key}` });
+    let emptyFields = [];
+    if (!title) {
+      emptyFields.push("title");
+    }
+    if (!cover) {
+      emptyFields.push("cover");
+    }
+    if (!artist) {
+      emptyFields.push("artist");
+    }
+    if (emptyFields.length > 0) {
+      return res
+        .status(400)
+        .json({ error: "Please fill in all fields", emptyFields });
+    }
 
-  //console.log(name);
-  //res.send({ imagePath: `${result.Key}` });
-  let emptyFields = [];
-  if (!title) {
-    emptyFields.push("title");
+    //add album to DB
+    //userid = findbyemail();
+
+    try {
+      const album = await Album.create({ title, artist, cover, user_id });
+      res.status(201).json(album);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
   }
   if (!cover) {
     emptyFields.push("cover");

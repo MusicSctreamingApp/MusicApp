@@ -13,8 +13,9 @@ const loginUser = async (req, res) => {
     const user = await User.login(email, password);
     //create JWT
     const token = createToken(user._id);
+    const role = user.role;
     //send response with email and token
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, role, token });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -95,6 +96,7 @@ const updateUser = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(422).json({ error: "invalid ID" });
   }
+
   //in update, use spread operator...to spread body fields inside request header
   const user = await User.findOneAndUpdate(
     { _id: id },
