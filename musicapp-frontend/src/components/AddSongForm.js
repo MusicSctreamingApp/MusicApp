@@ -6,10 +6,12 @@ const AddSongForm = () => {
   const { dispatch } = useSongsContext();
   const { user } = useAuthContext();
   const [title, setTitle] = useState("");
-  const [load, setLoad] = useState("");
-  const [reps, setReps] = useState("");
-  const [error, setError] = useState(null);
+  const [album_id, setAlbumId] = useState("");
+  const [file_url, setFileURL] = useState("");
+  const [playlist_id, setPlaylistID] = useState("");
   const [emptyFields, setEmptyFields] = useState([]);
+  const [error, setError] = useState(null);
+  // const [emptyFields, setEmptyFields] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +20,8 @@ const AddSongForm = () => {
       setError("You must be logged in");
       return;
     }
-    const song = { title, load, reps };
-
+    // const song = { title, load, reps };
+    const song = { title, album_id,file_url, playlist_id };
     const response = await fetch("/api/songs", {
       method: "POST",
       body: JSON.stringify(song),
@@ -37,8 +39,9 @@ const AddSongForm = () => {
     if (response.ok) {
       setEmptyFields([]);
       setTitle("");
-      setLoad("");
-      setReps("");
+      setAlbumId("");
+      setFileURL("");
+      setPlaylistID("");
       setError(null);
       dispatch({ type: "CREATE_SONG", payload: json });
     }
@@ -48,7 +51,7 @@ const AddSongForm = () => {
     <form onSubmit={handleSubmit} className="create">
       <h3>Add a new song</h3>
 
-      <label htmlFor="title">Excercise Title:</label>
+      <label htmlFor="title">Title of the Song:</label>
       <input
         type="text"
         name="title"
@@ -58,17 +61,17 @@ const AddSongForm = () => {
         className={emptyFields.includes("title") ? "error" : ""}
       />
 
-      <label htmlFor="load">Excercise Load:</label>
+      {/* <label htmlFor="Album_id">Album:</label>
       <input
         type="text"
-        name="load"
-        id="load"
-        onChange={(e) => setLoad(e.target.value)}
-        value={load}
-        className={emptyFields.includes("load") ? "error" : ""}
-      />
-
-      <label htmlFor="reps">Excercise Reps:</label>
+        name="album"
+        id="album"
+        onChange={(e) => setAlbumId(e.target.value)}
+        value={album_id}
+        className={emptyFields.includes("albumID") ? "error" : ""}
+      /> 
+ 
+      <label htmlFor="reps">PlayList:</label>
       <input
         type="text"
         name="reps"
@@ -76,7 +79,7 @@ const AddSongForm = () => {
         onChange={(e) => setReps(e.target.value)}
         value={reps}
         className={emptyFields.includes("reps") ? "error" : ""}
-      />
+      />  */}
 
       <button>Add Song</button>
       {error && <div className="error">{error}</div>}

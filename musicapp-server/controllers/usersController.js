@@ -14,7 +14,7 @@ const loginUser = async (req, res) => {
     //create JWT
     const token = createToken(user._id);
     //send response with email and token
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token, user});
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

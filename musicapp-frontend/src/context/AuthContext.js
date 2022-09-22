@@ -22,9 +22,13 @@ export const AuthContextProvider = ({ children }) => {
         const user = JSON.parse(localStorage.getItem('user'))
 
         if(user){
+            if (user.role === "ADMIN") {
+                dispatch({type: 'LOGIN', payload: user})
+            }
             dispatch({type: 'LOGIN', payload: user})
-        }
-    },[])
+            
+        };
+            },[])
 
     console.log('AuthContext state:', state)
 
