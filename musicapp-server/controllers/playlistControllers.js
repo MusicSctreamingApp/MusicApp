@@ -4,10 +4,7 @@ const mongoose = require("mongoose");
 // GET ALL USER playlists
 const getPlaylists = async (req, res) => {
   //the find method CAN be FILTERED...or sorted: here createdAt: -1 = Desc
-  const playlists = await Playlist.find()
-    // .populate({ songs }) // NOT SURE THAT'S HOW IT WORKS-----------------------<<<
-    .sort({ createdAt: -1 });
-
+  const playlists = await Playlist.find() 
   res.status(200).json(playlists);
 };
 // GET ALL USER playlists
@@ -15,9 +12,6 @@ const getUserPlaylists = async (req, res) => {
   const user_id = req.user._id;
   //the find method CAN be FILTERED...or sorted: here createdAt: -1 = Desc
   const playlists = await Playlist.find({ user_id })
-    // .populate({ songs }) // NOT SURE THAT'S HOW IT WORKS-----------------------<<<
-    .sort({ createdAt: -1 });
-
   res.status(200).json(playlists);
 };
 //GET SINGLE Playlist by id

@@ -21,10 +21,21 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
 
+<<<<<<< HEAD
     if (user) {
       dispatch({ type: "LOGIN", payload: user });
     }
   }, []);
+=======
+        if(user){
+            if (user.role === "ADMIN") {
+                dispatch({type: 'LOGIN', payload: user})
+            }
+            dispatch({type: 'LOGIN', payload: user})
+            
+        };
+            },[])
+>>>>>>> 74ab7b114fd266ea800e414c83d81c2b076d7ced
 
   console.log("AuthContext state:", state);
 
