@@ -6,7 +6,6 @@ const Navbar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
 
-
   const handleClick = () => {
     logout();
   };
@@ -20,14 +19,19 @@ const Navbar = () => {
           {user && (
             <div>
               <span>{user.email}</span>
-              <button onClick={handleClick}>Log Out</button>
               <Link to="/myalbums"> My Albums</Link>
+              <button onClick={handleClick}>Log Out</button>
             </div>
           )}
           {!user && (
             <div>
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
+            </div>
+          )}
+          {user && user.role === "ADMIN" && (
+            <div>
+              <Link to="/AdminPanel">Admin Panel</Link>
             </div>
           )}
         </nav>

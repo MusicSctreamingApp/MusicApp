@@ -91,28 +91,9 @@ app.use(
     await unlinkFile(file.path);
     //console.log(result);
 
-    //authentication
-    const { authorization } = req.headers;
-
-    if (!authorization) {
-      return res.status(401).json({ error: "Authorization token required" });
-    }
-
-    const token = authorization.split(" ")[1];
-
-    try {
-      const { _id } = jwt.verify(token, process.env.SECRET);
-
-      req.user = await User.findOne({ _id }).select("_id");
-      next();
-    } catch (err) {
-      console.log(err);
-      res.status(401).json({ error: "Request not authorized" });
-    }
-
     const title = req.body.title;
     const artist = req.body.artist;
-    const cover = result.Key;
+    const cover = "https://spitifo.s3.amazonaws.com/" + result.Key;
     const user_idt = req.user._id;
     const user_id = req.user._id;
     console.log(user_idt);

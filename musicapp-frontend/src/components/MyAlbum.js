@@ -13,19 +13,10 @@ function MyAlbum() {
         Add new Album
       </Link>
 
-<<<<<<< HEAD
       <Link className="button" to="/addsong">
         {" "}
         Add new Song
       </Link>
-=======
-
-
-
-      <Link className="button" to="/addsong"> Add new Song</Link>
-
-
->>>>>>> 91d695b21bb740674672f739349758ae99dbfaa7
     </div>
   );
 }
