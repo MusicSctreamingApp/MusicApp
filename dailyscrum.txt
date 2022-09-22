@@ -5,6 +5,20 @@
 
 
 
+---------------------------------------------------------------------------------------
+
+2022/09/22 Louis
+1. Done / not done since last scrum:
+- Admin can change user info in Admin Panel
+- secured some User based routes
+- added admin only button for Admin Panel
+- added user.role in authContext
+2. To do until next Scrum:
+- Admin can delete / ban user in Admin Panel
+- open for more work 
+3. Need assistance / figure things out
+- ideas for hosting?
+
 2022/09/22 Ling
 1. Done / not done since last scrum:
 - Coding myalbums,myalbum, addsong pages.
