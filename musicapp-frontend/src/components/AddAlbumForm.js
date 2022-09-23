@@ -64,7 +64,7 @@ function AddAlbumForm() {
       setFile("");
       setError(null);
       //dispatch({ type: "CREATE_SONG", payload: json });
-      navigate("/myalbum");
+      navigate("/myalbums");
 
     }
 

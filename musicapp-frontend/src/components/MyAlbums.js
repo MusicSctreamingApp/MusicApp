@@ -42,7 +42,7 @@ function MyAlbums() {
     <div className="App app ">
       <div>
         <Link className="button" to="/addalbum"> Add new Album</Link>
-        <Link className="button" to="/myalbum"> My Album</Link>
+        {/* <Link className="button" to="/myalbum"> My Album</Link> */}
         {/* <Link className="button" to="/addsong"> Add new Song</Link> */}
       </div>
 
