@@ -57,7 +57,7 @@ function App() {
               element={user ? <AddAlbumForm /> : <Navigate to="/login" />}
             />
             <Route
-              path="/myalbums/:id"
+              path="/myalbums"
               element={user ? <MyAlbums /> : <Navigate to="/login" />}
             />
             <Route
