@@ -5,11 +5,29 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const AdminPanel = () => {
-  const [users, setUser] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
   const handleSideBarButtons = () => {};
+
+  const handleDelete = async (_id) => {
+    const response = await fetch(`/api/admin/${_id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+
+    const json = await response.json();
+
+    if (response.ok) {
+      setUsers(users.filter((s) => s._id !== _id));
+    } else {
+      setError(json.error);
+    }
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -22,13 +40,13 @@ const AdminPanel = () => {
       const json = await response.json();
 
       if (response.ok) {
-        setUser(json);
+        setUsers(json);
       }
     };
     if (user) {
       fetchUsers();
     }
-  }, [setUser, user]);
+  }, [setUsers, user]);
 
   return (
     <div className="container-fluid">
@@ -98,7 +116,9 @@ const AdminPanel = () => {
                         </button>
                       </td>
                       <td>
-                        <button>Delete / Ban </button>
+                        <button onClick={() => handleDelete(users._id)}>
+                          Delete / Ban
+                        </button>
                       </td>
                     </tr>
                   ))}
