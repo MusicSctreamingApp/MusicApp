@@ -57,15 +57,15 @@ function App() {
               element={user ? <AddAlbumForm /> : <Navigate to="/login" />}
             />
             <Route
-              path="/myalbums"
+              path="/myalbums/:id"
               element={user ? <MyAlbums /> : <Navigate to="/login" />}
             />
             <Route
-              path="/myalbum"
+              path="/myalbum/:id"
               element={user ? <MyAlbum /> : <Navigate to="/login" />}
             />
             <Route
-              path="/addsong"
+              path="/addsong/:id"
               element={user ? <AddSongForm /> : <Navigate to="/login" />}
             />
             {/* <Route

@@ -5,6 +5,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const Navbar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
+  const userId = user._id;
 
   const handleClick = () => {
     logout();
@@ -19,7 +20,7 @@ const Navbar = () => {
           {user && (
             <div>
               <span>{user.email}</span>
-              <Link to="/myalbums"> My Albums</Link>
+              <Link to={"/myalbums" + userId}> My Albums</Link>
               <button onClick={handleClick}>Log Out</button>
             </div>
           )}

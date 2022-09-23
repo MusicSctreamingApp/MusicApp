@@ -4,12 +4,15 @@ import axios from 'axios'
 import { useState } from 'react';
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
 
 
 
 function AddAlbumForm() {
+  const { id } = useParams();
+  const albumId = id;
   let navigate = useNavigate();
   const { user } = useAuthContext();
 
@@ -64,7 +67,7 @@ function AddAlbumForm() {
       setFile("");
       setError(null);
       //dispatch({ type: "CREATE_SONG", payload: json });
-      navigate("/myalbums");
+      navigate(`/myalbums/${albumId}`);
 
     }
 
