@@ -10,7 +10,7 @@ const AdminPanel = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const handleSideBarButtons = () => {};
+  const handleSideBarButtons = () => { };
 
   const handleDelete = async (_id) => {
     const response = await fetch(`/api/admin/${_id}`, {
