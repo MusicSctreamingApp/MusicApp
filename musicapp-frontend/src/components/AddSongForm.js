@@ -102,7 +102,7 @@ function AddSongForm() {
 
         <div className="center">
 
-          <button type="submit">Add New Album</button>
+          <button type="submit">Add New Song</button>
         </div>
         {error && <div className="error">{error}</div>}
       </form>

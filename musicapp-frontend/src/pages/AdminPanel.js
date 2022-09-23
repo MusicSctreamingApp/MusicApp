@@ -9,7 +9,7 @@ const AdminPanel = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const handleSideBarButtons = () => {};
+  const handleSideBarButtons = () => { };
 
   useEffect(() => {
     const fetchUsers = async () => {
