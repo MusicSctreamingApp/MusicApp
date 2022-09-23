@@ -3,7 +3,16 @@
 2. What I plan to do from this scrum to next? (next 24 hours)
 3. Where do I need assistance? What do I need to figure out?
 
-
+2022/09/22 Louis
+1. Done / not done since last scrum:
+- read git documentation
+- helped fix repo mergin errors
+- restored Trello user stories
+2. To do until next Scrum:
+- Admin can delete / ban user in Admin Panel
+- work on music player implementation 
+3. Need assistance / figure things out
+- ideas for hosting?
 
 ---------------------------------------------------------------------------------------
 
