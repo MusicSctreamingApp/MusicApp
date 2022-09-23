@@ -1,16 +1,18 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const AdminPanel = () => {
   const [users, setUser] = useState([]);
   const { user } = useAuthContext();
-  const handleSideBarButtons = () => { };
+  const navigate = useNavigate();
+
+  const handleSideBarButtons = () => {};
 
   useEffect(() => {
     const fetchUsers = async () => {
-      console.log(user);
       const response = await fetch("/api/admin/", {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -52,6 +54,15 @@ const AdminPanel = () => {
                   Users
                 </button>
               </li>
+              <li className="nav-item">
+                <button
+                  className="nav-link"
+                  onClick={() => navigate("/UpdateUser")}
+                >
+                  <span data-feather="file"></span>
+                  Update User
+                </button>
+              </li>
             </ul>
           </div>
         </nav>
@@ -80,7 +91,11 @@ const AdminPanel = () => {
                       <td>{users.email}</td>
                       <td>user role : {users.role}</td>
                       <td>
-                        <button>Edit</button>
+                        <button>
+                          <Link to="/UpdateUser" state={{ userInfo: users }}>
+                            Edit
+                          </Link>
+                        </button>
                       </td>
                       <td>
                         <button>Delete / Ban </button>
