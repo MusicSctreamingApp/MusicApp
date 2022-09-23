@@ -18,7 +18,7 @@ function MyAlbums() {
   useEffect(() => {
     const fetchAlbums = async () => {
       console.log(user);
-      const response = await fetch("/api/album/all", {
+      const response = await fetch("/api/album/user", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

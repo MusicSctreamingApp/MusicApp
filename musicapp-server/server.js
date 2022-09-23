@@ -86,7 +86,7 @@ app.use(
   upload.single("image"),
   async (req, res) => {
     const file = req.file;
-    //console.log(file);
+    console.log(file);
 
     const result = await uploadFile("images", file);
     await unlinkFile(file.path);
@@ -96,6 +96,7 @@ app.use(
     const artist = req.body.artist;
     const cover = result.Key;
     const user_id = req.user._id;
+    console.log(user_id);
 
     //console.log(name);
     //res.send({ imagePath: `${result.Key}` });
@@ -118,12 +119,6 @@ app.use(
     //add album to DB
     //userid = findbyemail();
 
-    try {
-      const album = await Album.create({ title, artist, cover, user_id });
-      res.status(201).json(album);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
 
     if (!cover) {
       emptyFields.push("cover");
