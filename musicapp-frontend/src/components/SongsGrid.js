@@ -30,6 +30,4 @@ const SongsGrid = ({ song }) => {
   );
 };
 
-
-
 export default SongsGrid;
