@@ -11,9 +11,12 @@ import MyAlbum from "./components/MyAlbum";
 import AddSongForm from "./components/AddSongForm";
 import AdminPanel from "./pages/AdminPanel";
 import UpdateUserForm from "./components/UpdateUserForm";
+import { AudioPlayer } from "./components/AudioPlayer";
+import { useSongsContext } from "./hooks/useSongsContext";
 
 function App() {
   const { user } = useAuthContext();
+  const { songsdata } = useSongsContext();
   return (
     <div className="App">
       <BrowserRouter>
@@ -74,6 +77,7 @@ function App() {
             />*/}
           </Routes>
         </div>
+        {songsdata && <AudioPlayer songsdata={songsdata} />}
       </BrowserRouter>
     </div>
   );

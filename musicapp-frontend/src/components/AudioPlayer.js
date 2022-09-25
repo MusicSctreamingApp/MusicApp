@@ -3,9 +3,10 @@ import styles from "../styles/AudioPlayer.module.css";
 import { BsFillSkipStartCircleFill, BsSkipEndCircleFill } from "react-icons/bs";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
-import { songsdata } from "../audio";
-const AudioPlayer = () => {
+
+const AudioPlayer = ({ songsdata }) => {
   // state
+  // const [songs, dispatch] = useSongsContext();
   const [songs, setSongs] = useState(songsdata);
   const [currentSong, setCurrentSong] = useState(songsdata[0]);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -26,6 +27,7 @@ const AudioPlayer = () => {
     audioPlayer?.current?.readyState,
     setCurrentSong,
     isPlaying,
+    songs,
   ]);
 
   const calculateTime = (secs) => {
@@ -78,9 +80,9 @@ const AudioPlayer = () => {
   };
 
   const skipBack = async () => {
-    const index = songs.findIndex((x) => x.title == currentSong.title);
+    const index = songs.findIndex((x) => x.title === currentSong.title);
     setIsPlaying(false);
-    if (index == 0) {
+    if (index === 0) {
       setCurrentSong(songs[songs.length - 1]);
     } else {
       setCurrentSong(songs[index - 1]);
@@ -93,9 +95,9 @@ const AudioPlayer = () => {
   };
 
   const skiptoNext = async () => {
-    const index = songs.findIndex((x) => x.title == currentSong.title);
+    const index = songs.findIndex((x) => x.title === currentSong.title);
     setIsPlaying(false);
-    if (index == songs.length - 1) {
+    if (index === songs.length - 1) {
       setCurrentSong(songs[0]);
     } else {
       setCurrentSong(songs[index + 1]);
@@ -107,56 +109,57 @@ const AudioPlayer = () => {
     setIsPlaying(true);
   };
 
-  const endedListener = () => {
-    document.getElementById("audioPlayer");
-    endedListener.addEventListener("ended", skiptoNext());
-  };
-
   return (
-    <div className={styles.audioPlayer}>
-      {/* song info, title, artist, image */}
-      <div className={styles.songInfo}>
-        <p className={styles.title}>{currentSong.title}</p>
-      </div>
-      {/* html audio component */}
-      <audio
-        onEnded={skiptoNext}
-        ref={audioPlayer}
-        src={currentSong.url}
-        preload="metadata"
-      ></audio>
+    <>
+      {songsdata && (
+        <div className={styles.audioPlayer}>
+          {/* song info, title, artist, image */}
+          <div className={styles.songInfo}>
+            <p className={styles.title}>{currentSong.title}</p>
+          </div>
+          {/* html audio component */}
+          <audio
+            onEnded={skiptoNext}
+            ref={audioPlayer}
+            src={currentSong.url}
+            preload="metadata"
+          ></audio>
 
-      <div className={styles.timeElements}>
-        {/* current time */}
-        <div className={styles.currentTime}>{calculateTime(currentTime)}</div>
-        {/* duration */}
-        <div className={styles.duration}>
-          {duration && !isNaN(duration) && calculateTime(duration)}
+          <div className={styles.timeElements}>
+            {/* current time */}
+            <div className={styles.currentTime}>
+              {calculateTime(currentTime)}
+            </div>
+            {/* duration */}
+            <div className={styles.duration}>
+              {duration && !isNaN(duration) && calculateTime(duration)}
+            </div>
+          </div>
+          {/* progress bar */}
+          <div className={styles.progressDiv}>
+            <input
+              type="range"
+              className={styles.progressBar}
+              defaultValue="0"
+              ref={progressBar}
+              onChange={changeRange}
+            />
+          </div>
+          {/* buttons */}
+          <div className={styles.controller}>
+            <button className={styles.forwardBackward} onClick={skipBack}>
+              <BsFillSkipStartCircleFill />
+            </button>
+            <button onClick={togglePlayPause} className={styles.playPause}>
+              {isPlaying ? <FaPause /> : <FaPlay className={styles.play} />}
+            </button>
+            <button className={styles.forwardBackward} onClick={skiptoNext}>
+              <BsSkipEndCircleFill />
+            </button>
+          </div>
         </div>
-      </div>
-      {/* progress bar */}
-      <div className={styles.progressDiv}>
-        <input
-          type="range"
-          className={styles.progressBar}
-          defaultValue="0"
-          ref={progressBar}
-          onChange={changeRange}
-        />
-      </div>
-      {/* buttons */}
-      <div className={styles.controller}>
-        <button className={styles.forwardBackward} onClick={skipBack}>
-          <BsFillSkipStartCircleFill />
-        </button>
-        <button onClick={togglePlayPause} className={styles.playPause}>
-          {isPlaying ? <FaPause /> : <FaPlay className={styles.play} />}
-        </button>
-        <button className={styles.forwardBackward} onClick={skiptoNext}>
-          <BsSkipEndCircleFill />
-        </button>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

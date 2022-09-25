@@ -14,7 +14,7 @@ const {
 } = require("../controllers/songControllers");
 //authentication middleware for all song routes
 const requireAuth = require("../middleware/requireAuth");
-router.use(requireAuth); //MAYBE NEED TO CHANGE SOME ROUTES WITHTOUT AUTH
+// router.use(requireAuth); //MAYBE NEED TO CHANGE SOME ROUTES WITHTOUT AUTH
 //routes
 router.get("/all", getSongs);
 
@@ -22,12 +22,11 @@ router.get("/album/:album_id", getAlbumSongs);
 
 router.get("/playlist/:playlist_id", getPlaylistSongs);
 
-router.get("/:id", getSong);
+router.get("/:id", requireAuth, getSong);
 
-router.post("/", createSong);
+router.post("/", requireAuth, createSong);
 
-router.delete("/:id", deleteSong);
+router.delete("/:id", requireAuth, deleteSong);
 
-
-router.patch("/:id", updateSong);
+router.patch("/:id", requireAuth, updateSong);
 module.exports = router;
