@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "../styles/AudioPlayer.module.css";
 import { BsFillSkipStartCircleFill, BsSkipEndCircleFill } from "react-icons/bs";
+import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
 
@@ -12,11 +13,14 @@ const AudioPlayer = ({ songsdata }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [volume, setVolume] = useState(100);
+  const [isMuted, setIsMuted] = useState(false);
 
   // references
   const audioPlayer = useRef(); // reference audio html component
   const progressBar = useRef(); // reference audio html tag progress bar
   const animationRef = useRef(); // reference progress bar animation
+  const volumeBar = useRef();
 
   useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration);
@@ -68,7 +72,7 @@ const AudioPlayer = ({ songsdata }) => {
     );
     setCurrentTime(progressBar.current.value);
   };
-
+  //Keep +/- 30 sec?
   const backThirty = () => {
     progressBar.current.value = Number(progressBar.current.value - 30);
     changeRange();
@@ -108,13 +112,29 @@ const AudioPlayer = ({ songsdata }) => {
     audioPlayer.current.play();
     setIsPlaying(true);
   };
+  //Sound controls
+  const changeVolume = (e) => {
+    audioPlayer.current.volume = e.target.value / 100;
+  };
+
+  const handleMute = () => {
+    if (!isMuted) {
+      setIsMuted(true);
+      audioPlayer.current.muted = true;
+    } else {
+      setIsMuted(false);
+      audioPlayer.current.muted = false;
+    }
+  };
 
   return (
     <>
       {songsdata && (
         <div className={styles.audioPlayer}>
           {/* song info, title, artist, image */}
+
           <div className={styles.songInfo}>
+            <div className="cover"></div>
             <p className={styles.title}>{currentSong.title}</p>
           </div>
           {/* html audio component */}
@@ -124,38 +144,51 @@ const AudioPlayer = ({ songsdata }) => {
             src={currentSong.url}
             preload="metadata"
           ></audio>
-
-          <div className={styles.timeElements}>
-            {/* current time */}
-            <div className={styles.currentTime}>
-              {calculateTime(currentTime)}
+          <div className="middle">
+            {/* buttons */}
+            <div className={styles.controller}>
+              <button className={styles.forwardBackward} onClick={skipBack}>
+                <BsFillSkipStartCircleFill />
+              </button>
+              <button onClick={togglePlayPause} className={styles.playPause}>
+                {isPlaying ? <FaPause /> : <FaPlay className={styles.play} />}
+              </button>
+              <button className={styles.forwardBackward} onClick={skiptoNext}>
+                <BsSkipEndCircleFill />
+              </button>
             </div>
-            {/* duration */}
-            <div className={styles.duration}>
-              {duration && !isNaN(duration) && calculateTime(duration)}
+            <div className={styles.timeElements}>
+              {/* current time */}
+              <div className={styles.currentTime}>
+                {calculateTime(currentTime)}
+              </div>
+              {/* progress bar */}
+              <div className={styles.progressDiv}>
+                <input
+                  type="range"
+                  className={styles.progressBar}
+                  defaultValue="0"
+                  ref={progressBar}
+                  onChange={changeRange}
+                />
+              </div>
+              {/* duration */}
+              <div className={styles.duration}>
+                {duration && !isNaN(duration) && calculateTime(duration)}
+              </div>
             </div>
           </div>
-          {/* progress bar */}
-          <div className={styles.progressDiv}>
+          <div className={styles.volume}>
+            <button className={styles.speaker} onClick={handleMute}>
+              {!isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
+            </button>
             <input
               type="range"
-              className={styles.progressBar}
-              defaultValue="0"
-              ref={progressBar}
-              onChange={changeRange}
+              className={styles.volumeBar}
+              defaultValue="100"
+              ref={volumeBar}
+              onChange={changeVolume}
             />
-          </div>
-          {/* buttons */}
-          <div className={styles.controller}>
-            <button className={styles.forwardBackward} onClick={skipBack}>
-              <BsFillSkipStartCircleFill />
-            </button>
-            <button onClick={togglePlayPause} className={styles.playPause}>
-              {isPlaying ? <FaPause /> : <FaPlay className={styles.play} />}
-            </button>
-            <button className={styles.forwardBackward} onClick={skiptoNext}>
-              <BsSkipEndCircleFill />
-            </button>
           </div>
         </div>
       )}

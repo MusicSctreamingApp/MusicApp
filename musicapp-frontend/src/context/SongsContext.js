@@ -1,11 +1,13 @@
 import { createContext, useReducer, useEffect } from "react";
+import { songsdata } from "../audio";
 export const SongsContext = createContext();
 
 export const songsReducer = (state, action) => {
   switch (action.type) {
     case "SET_SONGS":
       return {
-        songsdata: action.payload,
+        // songsdata: action.payload,
+        songsdata: songsdata,
       };
     // keeping create / delete in case we implement Playlists
     case "CREATE_SONG":
