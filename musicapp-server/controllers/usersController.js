@@ -11,11 +11,11 @@ const loginUser = async (req, res) => {
 
   try {
     const user = await User.login(email, password);
+    const { role, avatar, bio } = user;
     //create JWT
     const token = createToken(user._id);
-    const role = user.role;
     //send response with email and token
-    res.status(200).json({ email, token, user });
+    res.status(200).json({ token, role, email, avatar, bio });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -26,10 +26,11 @@ const signupUser = async (req, res) => {
 
   try {
     const user = await User.signup(email, password);
+    const { role, avatar, bio } = user;
     //create JWT
     const token = createToken(user._id);
     //send response with email and token
-    res.status(200).json({ email, token });
+    res.status(200).json({ token, role, email, avatar, bio });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
