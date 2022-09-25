@@ -61,11 +61,11 @@ function App() {
               element={user ? <MyAlbums /> : <Navigate to="/login" />}
             />
             <Route
-              path="/myalbum"
+              path="/myalbum/:id"
               element={user ? <MyAlbum /> : <Navigate to="/login" />}
             />
             <Route
-              path="/addsong"
+              path="/addsong/:id"
               element={user ? <AddSongForm /> : <Navigate to="/login" />}
             />
             {/* <Route
