@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // import  '../styles/home.css'
 import Container from 'react-bootstrap/Container';
@@ -9,9 +9,10 @@ import { useSongsContext } from "../hooks/useSongsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import AddSongFormContext from "../components/AddSongForm";
-import MyAlbumContext from "../components/MyAlbumsHomePage";
-import AllAlbumContext from "../components/AllAlbums";
+import MyAlbumComp from "../components/MyAlbumsHomePage";
+import AllAlbumComp from "../components/AllAlbums";
 import NavbarContext from "../components/NavbarHomePage";
+import {useAlbum} from "../hooks/useAlbum";
 
 //components
 import SongsGrid from "../components/SongsGrid";
@@ -28,13 +29,20 @@ function Home() {
     const [count, setCount] = useState(0);
     const { songs, dispatch } = useSongsContext();
     const { user } = useAuthContext();
-    const user_kk = JSON.parse(localStorage.getItem('user'))
-    
+    const user_kk = JSON.parse(localStorage.getItem('user'));
+    const { setAlbum, error, isLoading } = useAlbum();
+
+    useEffect (() => {
+      setAlbum("63311427bdccce7aead4c6db");
+    },[]
+    )
+
     return (
     <div className="home">
       <div className="songs"> 
-        <MyAlbumContext/>
-        <AllAlbumContext/>
+        <MyAlbumComp/>
+        <AllAlbumComp/>
+        
       </div>
     </div>
         );

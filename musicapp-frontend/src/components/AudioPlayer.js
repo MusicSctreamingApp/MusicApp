@@ -5,6 +5,8 @@ import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
 
+ 
+
 const AudioPlayer = ({ songsdata }) => {
   // state
   // const [songs, dispatch] = useSongsContext();
@@ -16,6 +18,7 @@ const AudioPlayer = ({ songsdata }) => {
   const [volume, setVolume] = useState(100);
   const [isMuted, setIsMuted] = useState(false);
 
+  const url = "https://spitifo.s3.amazonaws.com/";
   // references
   const audioPlayer = useRef(); // reference audio html component
   const progressBar = useRef(); // reference audio html tag progress bar
@@ -141,7 +144,7 @@ const AudioPlayer = ({ songsdata }) => {
           <audio
             onEnded={skiptoNext}
             ref={audioPlayer}
-            src={currentSong.url}
+            src={url + currentSong.file_url }
             preload="metadata"
           ></audio>
           <div className="middle">

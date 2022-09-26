@@ -6,8 +6,8 @@ export const songsReducer = (state, action) => {
   switch (action.type) {
     case "SET_SONGS":
       return {
-        // songsdata: action.payload,
-        songsdata: songsdata,
+        songsdata: action.payload,
+        // songsdata: songsdata,
       };
     // keeping create / delete in case we implement Playlists
     case "CREATE_SONG":
