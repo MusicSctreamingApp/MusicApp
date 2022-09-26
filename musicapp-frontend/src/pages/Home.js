@@ -29,21 +29,12 @@ function Home() {
     const { songs, dispatch } = useSongsContext();
     const { user } = useAuthContext();
     const user_kk = JSON.parse(localStorage.getItem('user'))
-    const list = [
-        {
-            value: "fdsf",
-            label: "dfdsfdfdsfdfdsfdfdsfdfdsf"
-          }
-    ];
     
     return (
     <div className="home">
       <div className="songs"> 
-
         <MyAlbumContext/>
-
         <AllAlbumContext/>
-
       </div>
     </div>
         );
