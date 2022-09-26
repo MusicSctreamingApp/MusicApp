@@ -10,7 +10,7 @@ const AdminPanel = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const handleSideBarButtons = () => { };
+  const handleSideBarButtons = () => {};
 
   const handleDelete = async (_id) => {
     const response = await fetch(`/api/admin/${_id}`, {
@@ -102,6 +102,7 @@ const AdminPanel = () => {
                 </tr>
               </thead>
               <tbody>
+                {error && <div className="error">{error}</div>}
                 {users &&
                   users.map((users) => (
                     <tr key={users._id}>

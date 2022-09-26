@@ -1,7 +1,6 @@
-
-import React from 'react'
-import axios from 'axios'
-import { useState } from 'react';
+import React from "react";
+import axios from "axios";
+import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -13,27 +12,40 @@ function AddSongForm() {
   const { user } = useAuthContext();
 
   const [title, setTitle] = useState("");
-  const [file, setFile] = useState();
+  const [file, setFile] = useState([]);
   const [images, setImages] = useState([]);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const [emptyFields, setEmptyFields] = useState([]);
 
   async function postImage({ title, albumId, image }) {
+    if (!title || !image) {
+      setError("input all fields");
+      return;
+    }
+    if (!albumId) {
+      setError("Album not found.");
+      return;
+    }
+    setError("");
     const formData = new FormData();
-    formData.append("title", title)
-    formData.append("albumId", albumId)
-    formData.append("image", image)
+    formData.append("title", title);
+    formData.append("albumId", albumId);
+    formData.append("image", image);
 
-    const result = await axios.post('http://localhost:4000/api/createsong/', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${user.token}`,
+    const result = await axios.post(
+      "http://localhost:4000/api/createsong/",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user.token}`,
+        },
       }
-    })
-    return result.data
+    );
+    return result.data;
   }
 
-  const submit = async event => {
+  const submit = async (event) => {
     event.preventDefault();
 
     if (!user) {
@@ -41,46 +53,37 @@ function AddSongForm() {
       return;
     }
 
-    const result = await postImage({ title, albumId, image: file })
+    const result = await postImage({ title, albumId, image: file });
     setImages([result.image, ...images]);
     //console.log(result);
     const json = await result.json;
-
+    console.log(json);
     // navigate("/myalbum");
 
     if (!result) {
-      setError(result.error);
-      console.log(result.error);
-      setEmptyFields(result.emptyFields);
-      console.log(result.emptyFields);
+      setError(json.error);
+      setEmptyFields(json.emptyFields);
     }
     if (result) {
-
       setEmptyFields([]);
       setTitle("");
       setFile("");
       setError(null);
       //dispatch({ type: "CREATE_SONG", payload: json });
       navigate(`/myalbum/${albumId}`);
-
     }
+  };
 
-
-  }
-
-  const fileSelected = event => {
-    const file = event.target.files[0]
-    setFile(file)
-  }
-
+  const fileSelected = (event) => {
+    const file = event.target.files[0];
+    setFile(file);
+  };
 
   return (
     <div className="App app">
-      <h3 className="center" >Add a new song</h3>
+      <h3 className="center">Add a new song</h3>
 
       <form onSubmit={submit}>
-
-
         <label htmlFor="title">Song Title:</label>
         <input
           type="text"
@@ -91,29 +94,25 @@ function AddSongForm() {
           className={emptyFields.includes("title") ? "error" : ""}
         />
 
-
-
         <label htmlFor="song">Song:</label>
-        <input onChange={fileSelected} type="file" accept="image/*"></input>
+        <input
+          onChange={fileSelected}
+          type="file"
+          accept="audio/*"
+          className={emptyFields.includes("title") ? "error" : ""}
+        ></input>
 
         <div className="center">
-
           <button type="submit">Add New Song</button>
         </div>
         {error && <div className="error">{error}</div>}
       </form>
-      <div>
-
-
-      </div>
-
-
+      <div></div>
     </div>
   );
 }
 
 export default AddSongForm;
-
 
 // import { useState } from "react";
 // import { useSongsContext } from "../hooks/useSongsContext";
