@@ -43,7 +43,7 @@ function App() {
             <Route
               path="/UpdateUser"
               element={
-                user && user.user.role === "ADMIN" ? (
+                user && user.role === "ADMIN" ? (
                   <UpdateUserForm />
                 ) : (
                   <Navigate to="/" />

@@ -44,15 +44,16 @@ const Navbar = () => {
     //   </div>
     //    {/* </div>  */}
     // </header>
+<div className = "container-fluid">
 
 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
   {/* <a className="navbar-brand" href="#">Navbar</a> */}
   <Link to="/">
           <img src={imgs} className="img1" />
         </Link>
-  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
-  </button>
+  </button> */}
 
   <div className="collapse navbar-collapse" id="navbarSupportedContent">
     <ul className="navbar-nav mr-auto">
@@ -62,7 +63,7 @@ const Navbar = () => {
         </a>
       </li>
 
-      {user && user.user.role === "ADMIN" && (
+      {user && user.role === "ADMIN" && (
         <li className="nav-item active">
             <a className="nav-link" href="#">  
             <Link to={"/AdminPanel"}>Admin Panel </Link> <span className="sr-only"></span>
@@ -72,7 +73,7 @@ const Navbar = () => {
       
       <li className="nav-item">
         <a className="nav-link" href="#">
-        {user && (<div>
+        {user && (<div className = "align-items-right">
                 <span>{user.email}</span>
                <Link to={"/myalbums"}> My Albums</Link>
                <button type="button" className="btn btn-secondary btn-sm active" onClick={handleClick}>Log Out</button>
@@ -83,6 +84,8 @@ const Navbar = () => {
     </ul>
   </div>
 </nav>
+    
+</div>
   );
 };
 

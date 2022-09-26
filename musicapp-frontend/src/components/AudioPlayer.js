@@ -19,7 +19,6 @@ const AudioPlayer = ({ songsdata }) => {
   const [volume, setVolume] = useState(100);
   const [isMuted, setIsMuted] = useState(false);
 
-  const url = "https://spitifo.s3.amazonaws.com/";
   // references
   const audioPlayer = useRef(); // reference audio html component
   const progressBar = useRef(); // reference audio html tag progress bar

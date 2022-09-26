@@ -58,12 +58,12 @@ function AllAlbums() {
 
 
   return (
-    <div className="App app ">
+    <div className="container">
   
       <div className="App">
       <div className='mt-50'>
         <div className='box3'>
-          <div className='title'> All Songs</div>
+          <div className='h2'> Find your favourite album today!</div>
           <div className='title2 w5'></div>
         </div>
         <div className='box'>
