@@ -38,11 +38,10 @@ function Home() {
     )
 
     return (
-    <div className="home">
-      <div className="songs"> 
+    <div>
+      <div> 
         <MyAlbumComp/>
-        <AllAlbumComp/>
-        
+        <AllAlbumComp/> 
       </div>
     </div>
         );
