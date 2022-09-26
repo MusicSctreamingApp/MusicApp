@@ -58,13 +58,17 @@ const Navbar = () => {
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="#">  
-        <Link to="/">
-        </Link>Home <span class="sr-only"></span></a>
+        <Link to="/">Home</Link> <span class="sr-only"></span>
+        </a>
       </li>
 
-         <li class="nav-item">
-        <a class="nav-link disabled" href="#">Admin</a>
-      </li>
+      {user && user.user.role === "ADMIN" && (
+        <li class="nav-item active">
+            <a class="nav-link" href="#">  
+            <Link to={"/AdminPanel"}>Admin Panel </Link> <span class="sr-only"></span>
+            </a>
+        </li> 
+      )}
       
       <li class="nav-item">
         <a class="nav-link" href="#">
@@ -75,6 +79,7 @@ const Navbar = () => {
         </div>)}
         </a>
       </li>
+
     </ul>
   </div>
 </nav>

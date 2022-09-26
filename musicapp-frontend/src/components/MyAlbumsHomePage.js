@@ -5,6 +5,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import  '../styles/home.css'
 
 
 // not finish yet
@@ -61,27 +62,34 @@ function MyAlbums() {
   return (
 
     <div className="App app ">
-      {/* <div>
-        <Link className="button" to="/addalbum"> Add new Album</Link>
+      
 
-      </div> */}
-
-
-      <div>
-
+      <div className="App">
+      <div className='mt-50'>
+        <div className='box3'>
+          <div className='title'> MyAlbum</div>
+          <div className='title2 w5'></div>
+        </div>
+        <div className='box'>
         {albums &&
           albums.map((album) => (
-            <div>
-
-              <Link className="button" to={"/myalbum/" + album._id}>
-                <img src={url + album.cover} alt="Pics" width="200" height="200" class="rounded float-left mt-0 ml-1 px-2 p-3" />
+            <Link className="" to={"/myalbum/" + album._id}>
+              <div className='item2 bg2 '>
+              <img src={url + album.cover} className="img2" />
+              <div>
+                <div className=' ft15 wb mt-10 '>
+                  {album.title}
+                </div>
+                <div className='txt mt-10 vtxt1'>
+                {album.artist}
+                </div>
+              </div>
+                </div>
               </Link>
-              {/* <button type="button" className="btn btn-warning" onClick={() => { handleDelete(album._id) }} >Delete</button> */}
-            </div>
-
-          ))}
-
+            ))}
+        </div>
       </div>
+    </div>
 
 
     </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import  '../styles/home.css'
+// import  '../styles/home.css'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,6 +10,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import AddSongFormContext from "../components/AddSongForm";
 import MyAlbumContext from "../components/MyAlbumsHomePage";
+import AllAlbumContext from "../components/AllAlbums";
 import NavbarContext from "../components/NavbarHomePage";
 
 //components
@@ -38,8 +39,11 @@ function Home() {
     return (
     <div className="home">
       <div className="songs"> 
-        <NavbarContext/>
+
         <MyAlbumContext/>
+
+        <AllAlbumContext/>
+
       </div>
     </div>
         );

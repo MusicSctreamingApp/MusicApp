@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 //pages & components
-import Navbar from "./components/Navbar";
+import Navbar from "./components/NavbarHomePage";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -14,6 +14,7 @@ import UpdateUserForm from "./components/UpdateUserForm";
 
 function App() {
   const { user } = useAuthContext();
+  
   return (
     <div className="App">
       <BrowserRouter>
@@ -34,18 +35,13 @@ function App() {
             />
             <Route
               path="/AdminPanel"
-              element={
-                user && user.role === "ADMIN" ? (
-                  <AdminPanel />
-                ) : (
-                  <Navigate to="/" />
-                )
-              }
+              element={user ? <AdminPanel /> : <Navigate to="/login" />}
             />
+           
             <Route
               path="/UpdateUser"
               element={
-                user && user.role === "ADMIN" ? (
+                user && user.user.role === "ADMIN" ? (
                   <UpdateUserForm />
                 ) : (
                   <Navigate to="/" />
