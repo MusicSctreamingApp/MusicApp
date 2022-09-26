@@ -32,6 +32,7 @@ const getAlbum = async (req, res) => {
 };
 //CREATE new album
 const createAlbum = async (req, res) => {
+
   const { title, cover, artist, user_id, songs } = req.body; // Should get user_id from AuthContext **
 
   let emptyFields = [];
