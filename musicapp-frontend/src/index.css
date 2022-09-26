@@ -7,7 +7,7 @@
   --error: #e7195a;
 }
 body {
-  background: #f1f1f1;
+  background-color: #F4F4F4;
   margin: 0;
   font-family: "Poppins";
 }
@@ -133,6 +133,7 @@ form.signup, form.login {
   width: 50%;
   margin: auto;
 }
+
 
 .center{
   display: flex;

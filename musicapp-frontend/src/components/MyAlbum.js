@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import styles from "../styles/MyAlbums.module.css";
 
-// not finish yet 
+
 function MyAlbum() {
   const { id } = useParams();
   const album_id = id;
@@ -82,24 +83,30 @@ function MyAlbum() {
 
       <div>
       </div>
-      <div className=" container mt-3">
+      <div className={styles.mysong + ' container mt-3 px-0'}>
 
-        <h3 >All Songs In This Album</h3>
-        <div className='underline'></div>
-        <div className='row justify-content-center'>
+        <div className={styles.myalbum + ' row mx-0'}>
+          <h1 className={styles.text + ' text-center fst-italic'}>My Album</h1>
+          <h5 className="font-monospace text-center fst-italic text-light">Blending elements of lounge, surf, latin, jazz, and Hawaiian music</h5>
+          <Link className={styles.link + ' ' + styles.text + ' text-center' + ' fw-bold fs-5'} to={"/addsong/" + id}> Add new song</Link>
+
+        </div>
+
+
+        <div className='row justify-content-left mt-3 mx-0'>
           <div className='col-4'>
             {album &&
               <img src={url + album.cover} className="rounded mx-auto d-block" alt="Pics" width="200" height="200" />}
           </div>
 
-          <div className='col-sm'>
-            <table className="table table-striped table-hover">
+          <div className='col-sm px-0 mx-0'>
+            <table className="table table-striped table-hover mx-0">
 
               <tbody>
                 {songs && songs.map((song) => {
                   return (
 
-                    <tr>
+                    <tr >
                       <td> {song.title} </td>
                       <td>
                         <audio controls>
@@ -117,10 +124,7 @@ function MyAlbum() {
                 })}
               </tbody>
             </table>
-            <div>
-              <Link className="btn btn-info" to={"/addsong/" + id}
-              > Add new Song</Link>
-            </div>
+
           </div>
         </div>
 
