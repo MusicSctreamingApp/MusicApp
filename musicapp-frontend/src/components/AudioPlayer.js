@@ -8,6 +8,7 @@ import { FaPause } from "react-icons/fa";
 const AudioPlayer = ({ songsdata }) => {
   // state
   // const [songs, dispatch] = useSongsContext();
+  let urlPrefix = "https://spitifo.s3.amazonaws.com/";
   const [songs, setSongs] = useState(songsdata);
   const [currentSong, setCurrentSong] = useState(songsdata[0]);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -141,7 +142,7 @@ const AudioPlayer = ({ songsdata }) => {
           <audio
             onEnded={skiptoNext}
             ref={audioPlayer}
-            src={currentSong.url}
+            src={urlPrefix + currentSong.file_url}
             preload="metadata"
           ></audio>
           <div className="middle">

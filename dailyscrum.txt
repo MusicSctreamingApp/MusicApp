@@ -3,7 +3,20 @@
 2. What I plan to do from this scrum to next? (next 24 hours)
 3. Where do I need assistance? What do I need to figure out?
 
-2022/09/22 Louis
+2022/09/26 Louis
+1. Done / not done since last scrum:
+- finished audio player component
+- made audio player global through SongContext
+- looked into hosting options
+2. To do until next Scrum:
+- Admin can delete / ban user in Admin Panel
+- work on music player implementation 
+3. Need assistance / figure things out
+- ideas for hosting?
+
+--------------------------------------------------------------------------------------------
+
+2022/09/23 Louis
 1. Done / not done since last scrum:
 - read git documentation
 - helped fix repo mergin errors

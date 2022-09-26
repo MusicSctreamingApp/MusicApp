@@ -119,7 +119,6 @@ app.use(
     //add album to DB
     //userid = findbyemail();
 
-
     if (!cover) {
       emptyFields.push("cover");
     }
@@ -149,6 +148,21 @@ app.use(
   requireAuth,
   upload.single("image"),
   async (req, res) => {
+    // let emptyFields = [];
+    // if (!req.body.title) {
+    //   emptyFields.push("title");
+    // }
+    // if (!req.body.album_id) {
+    //   emptyFields.push("albumId");
+    // }
+    // if (!req.file) {
+    //   emptyFields.push("image");
+    // }
+    // if (emptyFields.length > 0) {
+    //   return res
+    //     .status(400)
+    //     .json({ error: "Please fill in all fields", emptyFields });
+    // }
     const file = req.file;
     console.log(file);
 
@@ -163,21 +177,6 @@ app.use(
 
     //console.log(name);
     //res.send({ imagePath: `${result.Key}` });
-    let emptyFields = [];
-    if (!title) {
-      emptyFields.push("title");
-    }
-    if (!album_id) {
-      emptyFields.push("albumId");
-    }
-    if (!file_url) {
-      emptyFields.push("image");
-    }
-    if (emptyFields.length > 0) {
-      return res
-        .status(400)
-        .json({ error: "Please fill in all fields", emptyFields });
-    }
 
     //add song to DB
 
