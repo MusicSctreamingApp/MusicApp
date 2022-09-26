@@ -10,7 +10,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import AddSongFormContext from "../components/AddSongForm";
 import MyAlbumContext from "../components/MyAlbumsHomePage";
-import NavbarContext from "../components/Navbar";
+import NavbarContext from "../components/NavbarHomePage";
 
 //components
 import SongsGrid from "../components/SongsGrid";
@@ -38,11 +38,8 @@ function Home() {
     return (
     <div className="home">
       <div className="songs"> 
-        {/* {user_kk.user.role === 'ADMIN' ? <Link to="/"> Create A Post</Link> : ""} */}
         <NavbarContext/>
         <MyAlbumContext/>
-{/* 
-        {songs && songs.map((song) => <SongsGrid key={song._id} song={song} />)} */}
       </div>
     </div>
         );
