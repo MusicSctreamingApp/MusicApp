@@ -6,10 +6,6 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-
-
-
-
 function AddSongForm() {
   const { id } = useParams();
   const albumId = id;
