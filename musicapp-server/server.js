@@ -35,6 +35,13 @@ const albumRoutes = require("./routes/albums");
 const playlistRoutes = require("./routes/playlists");
 const app = express();
 
+//build version
+// app.use(express.static(path.join(__dirname, "build")));
+
+// app.get("/*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "build", "index.html"));
+// });
+
 //middle ware logging out requests coming in
 app.use(express.json());
 app.use(cors());

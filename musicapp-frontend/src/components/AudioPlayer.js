@@ -11,7 +11,7 @@ const AudioPlayer = () => {
   // const [songs, dispatch] = useSongsContext();
   let urlPrefix = "https://spitifo.s3.amazonaws.com/";
   const { songsdata } = useSongsContext();
-  const [songs, setSongs] = useState();
+  const [songs, setSongs] = useState([]);
   const [currentSong, setCurrentSong] = useState(songsdata[0]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -27,7 +27,7 @@ const AudioPlayer = () => {
 
   useEffect(() => {
     setSongs(songsdata);
-  }, []);
+  }, [songsdata]);
 
   useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration);
