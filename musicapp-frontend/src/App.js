@@ -68,10 +68,7 @@ function App() {
               path="/addsong/:id"
               element={user ? <AddSongForm /> : <Navigate to="/login" />}
             />
-            {/* <Route
-              path='/addalbum'
-              element={!user ? <AddAlbumForm /> : <Navigate to='/' />}
-            />*/}
+
           </Routes>
         </div>
         {songsdata && <AudioPlayer />}

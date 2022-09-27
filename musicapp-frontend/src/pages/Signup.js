@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
-// Test
+
 const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [bio, setBio] = useState("");
-  const { signup, error, isLoading } = useSignup();
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [avatar, setAvatar] = useState('')
+    const [bio, setBio] = useState('')
+    const { signup, error, isLoading } = useSignup()
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     await signup(email, password);
   };
+
 
   return (
     <div className="container">
@@ -40,10 +43,12 @@ const Signup = () => {
           />
         </div>
         {/* <label htmlFor="avatar">Avatar:</label>
+
             <input type="avatar" name="avatar" id="avatar"
                 onChange={(e) => setAvatar(e.target.value)}
                 value={avatar}
              /> */}
+
 
         {/* <form method="post" enctype="multipart/form-data" id="file_upload">
           <p>Avatar：</p>
@@ -82,5 +87,6 @@ const Signup = () => {
     </div>
   );
 };
+
 
 export default Signup;

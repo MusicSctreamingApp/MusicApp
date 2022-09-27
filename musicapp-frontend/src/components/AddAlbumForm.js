@@ -124,131 +124,189 @@ export default AddAlbumForm;
 
 
 
-// import { useState } from "react";
-// import { useAlbumsContext } from "../hooks/useAlbumsContext";
-// import { useAuthContext } from "../hooks/useAuthContext";
-// import { useParams } from "react-router-dom";
-// import axios from 'axios';
 
-// const AddAlbumForm = () => {
-//   let { user_id } = useParams();
-//   const { dispatch } = useAlbumsContext();
+
+
+
+
+
+
+// import React, { useRef } from 'react'
+// import axios from 'axios'
+// import { useState } from 'react';
+// import { useAuthContext } from "../hooks/useAuthContext";
+// import { useNavigate } from "react-router-dom";
+// import { Formik, Form, Field, ErrorMessage } from "formik";
+// import * as Yup from 'yup';
+// import styles from "../styles/MyAlbums.module.css";
+// // import { useForm } from "react-hook-form";
+
+
+// // need to sovle file upload validation
+// function AddAlbumForm() {
+//   let navigate = useNavigate();
 //   const { user } = useAuthContext();
+//   // const {register, handleSubmit}= useForm()
+//   const fileRef = useRef(null);
+
 //   const [title, setTitle] = useState("");
 //   const [artist, setArtist] = useState("");
-//   // const [cover, setCover] = useState("");
-
-//   const [file, setFile] = useState()
-//   const [images, setImages] = useState([])
-
+//   const [file, setFile] = useState();
+//   const [images, setImages] = useState([]);
 //   const [error, setError] = useState(null);
 //   const [emptyFields, setEmptyFields] = useState([]);
 
-//   async function postImage({ title, artist, image, user_id }) {
-//     const formData = new FormData();
-//     formData.append("image", image);
-//     formData.append("title", title);
-//     formData.append("artist", artist)
-//     formData.append("user_id", user_id)
+//   const initialValues = {
+//     title: "",
+//     artist: "",
+//     file: null,
 
-//     const result = await axios.post('http://localhost:4000/api/albumtest/', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+//   };
+
+//   const validationSchema = Yup.object().shape({
+//     title: Yup.string().min(1).max(50).required("Title is required"),
+//     artist: Yup.string().min(1).max(50).required("Artist is required"),
+//     file: Yup
+//       .mixed()
+
+//       .nullable()
+//     // .required("Cover is required")
+//     // .test(
+//     //   "FILE_SIZE",
+//     //   "Uploaded file is too big.",
+//     //   (value) => !value || (value && value.size <= 1024 * 1024)
+//     // ),
+
+
+//   });
+
+//   async function postImage({ title, artist, image }) {
+//     const formData = new FormData();
+//     formData.append("title", title)
+//     formData.append("artist", artist)
+//     formData.append("image", image)
+
+//     const result = await axios.post('http://localhost:4000/api/albumtest/', formData, {
+//       headers: {
+//         'Content-Type': 'multipart/form-data',
+//         Authorization: `Bearer ${user.token}`,
+//       }
+//     })
+
 //     return result.data
 //   }
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
+
+//   const submit = async event => {
+//     // event.preventDefault();
 
 //     if (!user) {
 //       setError("You must be logged in");
 //       return;
 //     }
 
-//     const response = await postImage({ title, artist, image: file, user_id })
-//     setImages([response.image, ...images])
+//     const result = await postImage({ title, artist, image: file })
+//     setImages([result.image, ...images]);
 
-//     // const response = await fetch("/api/songs", {
-//     //   method: "POST",
-//     //   body: JSON.stringify(song),
-//     //   headers: {
-//     //     "Content-Type": "application/json",
-//     //     Authorization: `Bearer ${ user.token }`,
-//     //   },
-//     // });
-//     const json = await response.json();
 
-//     if (!response.ok) {
-//       setError(json.error);
-//       setEmptyFields(json.emptyFields);
+//     const json = await result.json;
+
+//     if (!result) {
+//       setError(result.error);
+//       console.log(result.error);
+//       setEmptyFields(result.emptyFields);
+//       console.log(result.emptyFields);
 //     }
-//     if (response.ok) {
+//     if (result) {
+
 //       setEmptyFields([]);
 //       setTitle("");
 //       setArtist("");
 //       setFile("");
 //       setError(null);
-//       dispatch({ type: "CREATE_SONG", payload: json });
-//     }
-//   };
+//       //dispatch({ type: "CREATE_SONG", payload: json });
+//       navigate(`/myalbums`);
 
-//   const fileSelected = event => {
-//     const file = event.target.files[0]
-//     setFile(file)
+//     }
+
+
 //   }
 
-//   {/* <input
-//         type="text"
-//         name="cover"
-//         id="cover"
-//         onChange={(e) => setCover(e.target.value)}
-//         value={cover}
-//         className={emptyFields.includes("cover") ? "error" : ""}
-//       /> */}
+//   const fileSelected = event => {
+//     const file = event.target.files[0];
+//     setFile(file);
+//   }
+
 
 //   return (
-//     <form onSubmit={handleSubmit} className="create">
-//       <h3>Add a new album</h3>
+//     <div className="App app">
+//       <Formik initialValues={initialValues} onSubmit={submit} validationSchema={validationSchema}>
+//         <div>
+//           <h3 className="center" >Add a new album</h3>
 
-//       <label htmlFor="title">Album Title:</label>
-//       <input
-//         type="text"
-//         name="title"
-//         id="title"
-//         onChange={(e) => setTitle(e.target.value)}
-//         value={title}
-//         className={emptyFields.includes("title") ? "error" : ""}
-//       />
+//           <Form >
+//             <div>
+//               <label htmlFor="title">Album Title:</label>
+//               <Field
+//                 autoComplete="off"
+//                 type="text"
+//                 name="title"
+//                 id="title"
+//                 className={emptyFields.includes("title") ? "error" : ""}
+//               />
+//               <div>
+//                 <ErrorMessage className={styles.error + ' text-end mb-2'} name="title" component="span" />
+//               </div>
+//             </div>
 
-//       <label htmlFor="artist">Artist:</label>
-//       <input
-//         type="text"
-//         name="artist"
-//         id="artist"
-//         onChange={(e) => setArtist(e.target.value)}
-//         value={artist}
-//         className={emptyFields.includes("artist") ? "error" : ""}
-//       />
+//             <div>
+
+//               <label htmlFor="artist">Artist:</label>
+//               <Field
+//                 autoComplete="off"
+//                 type="text"
+//                 name="artist"
+//                 id="artist"
+//                 className={emptyFields.includes("artist") ? "error" : ""}
+//               />
+//               <div>
+//                 <ErrorMessage className={styles.error + ' text-end mb-2'} name="artist" component="span" />
+//               </div>
+//             </div>
+//             {/* <div>
+//               <input ref={register} type="file" name="picture" />
+//             </div> */}
+
+//             <div>
+//               <label htmlFor="cover">Cover Picture:</label>
+//               <input
+//                 ref={fileRef}
+//                 type="file"
+//                 name="file"
+//                 accept="image/*"
+//                 onChange={fileSelected} />
+//               <div>
+//                 <ErrorMessage className={styles.error + ' text-end mb-2'} name="file" component="span" />
+//               </div>
+
+//             </div>
+//             <div className="center">
+
+//               <button type="submit">Add New Album</button>
+//             </div>
+//             {error && <div className="error">{error}</div>}
+
+//           </Form>
+//         </div>
 
 
-//       <label htmlFor="cover">Excercise Reps:</label>
-//       <input
-//         onChange={fileSelected}
-//         type="file"
-//         accept="image/*"
-//         className={emptyFields.includes("cover") ? "error" : ""}
-//       ></input>
+//       </Formik>
 
-
-//       <button>Add Album</button>
-//       {error && <div className="error">{error}</div>}
-//     </form>
+//     </div>
 //   );
-// };
+// }
 
 // export default AddAlbumForm;
-
-
-
-
 
 
 
