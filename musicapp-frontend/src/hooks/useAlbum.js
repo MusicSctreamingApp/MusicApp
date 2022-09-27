@@ -6,7 +6,7 @@ export const useAlbum = () => {
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useSongsContext();
 
-  const setAlbum = async (album_id) => {
+  const playAlbum = async (album_id) => {
     setIsLoading(true);
     setError(null);
 
@@ -29,5 +29,5 @@ export const useAlbum = () => {
     }
   };
 
-  return { setAlbum, isLoading, error };
+  return { playAlbum, isLoading, error };
 };

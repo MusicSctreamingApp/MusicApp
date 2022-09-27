@@ -4,14 +4,14 @@ import { BsFillSkipStartCircleFill, BsSkipEndCircleFill } from "react-icons/bs";
 import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
+import { useSongsContext } from "../hooks/useSongsContext";
 
- 
-
-const AudioPlayer = ({ songsdata }) => {
+const AudioPlayer = () => {
   // state
   // const [songs, dispatch] = useSongsContext();
   let urlPrefix = "https://spitifo.s3.amazonaws.com/";
-  const [songs, setSongs] = useState(songsdata);
+  const { songsdata } = useSongsContext();
+  const [songs, setSongs] = useState();
   const [currentSong, setCurrentSong] = useState(songsdata[0]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -26,15 +26,23 @@ const AudioPlayer = ({ songsdata }) => {
   const volumeBar = useRef();
 
   useEffect(() => {
+    setSongs(songsdata);
+  }, []);
+
+  useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration);
     setDuration(seconds);
     progressBar.current.max = seconds;
+    if (!audioPlayer.current.play()) {
+      audioPlayer.current.play();
+      setIsPlaying(true);
+    }
   }, [
     audioPlayer?.current?.loadedmetadata,
     audioPlayer?.current?.readyState,
     setCurrentSong,
-    isPlaying,
     songs,
+    duration,
   ]);
 
   const calculateTime = (secs) => {
