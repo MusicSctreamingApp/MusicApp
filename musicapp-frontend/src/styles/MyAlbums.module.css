@@ -1,0 +1,104 @@
+:root {
+  --blue: #1e90ff;
+  --white: #ffffff;
+  --green: #1aac83;
+  --bg: #303030;
+  --yellogreen:  #C0D233;
+  --lightgrey: #F4F4F4;
+}
+
+.myalbumpic{
+  width: 70%;
+  margin: auto;
+  
+}
+.try, .mysong{
+background-color: #F4F4F4;
+}
+
+.link{
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--green);
+}
+
+.btndel{
+  padding:0 10 0 0;
+  margin:0 10 0 0;
+ 
+
+}
+.btndel:hover {
+  background: #dd5e89;
+   font-size: 15px;
+   font-weight: bolder;
+   color: var(--green);
+   outline: #C0D233;
+}
+
+.myalbum{
+  background: #dd5e89;
+  background: -webkit-linear-gradient(to left, #dd5e89, #f7bb97);
+  background: linear-gradient(to left, #dd5e89, #f7bb97);
+   /* min-height: 10vh;  */
+   margin: 0;
+
+
+}
+.text{
+  color: var(--yellogreen);
+  font-style: italic;
+  padding: 0;
+}
+
+.pcontainer{
+  position: relative;
+  width: 100%;
+}
+.albumpic {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  transition: .5s ease;
+  /* backface-visibility: hidden; */
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  ;
+}
+
+.pcontainer:hover .albumpic {
+  opacity: 0.3;
+}
+
+.pcontainer:hover .middle {
+  opacity: 1;
+}
+
+.clickalbum {
+  background-color: #f7bb97;
+  border-radius: 10px 30px 10px;
+  color: var(--white);
+  font-size: 1.5rem;
+  padding: 16px 32px;
+}
+ .cardbox{
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+.clickalbum:hover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.error{
+  color: rgb(231, 23, 23);
+}
