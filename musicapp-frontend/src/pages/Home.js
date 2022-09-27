@@ -1,40 +1,53 @@
-import { useEffect } from "react";
+import { useEffect, useState } from 'react'
+
+// import  '../styles/home.css'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import axios from "axios";
 import { useSongsContext } from "../hooks/useSongsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useNavigate, Link } from "react-router-dom";
+import AddSongFormContext from "../components/AddSongForm";
+import MyAlbumComp from "../components/MyAlbumsHomePage";
+import AllAlbumComp from "../components/AllAlbums";
+import NavbarContext from "../components/NavbarHomePage";
+import {useAlbum} from "../hooks/useAlbum";
 
 //components
 import SongsGrid from "../components/SongsGrid";
 
-const Home = () => {
-  const { songs, dispatch } = useSongsContext();
-  const { user } = useAuthContext();
+// const Home = () => {
+//     const { songs, dispatch } = useSongsContext();
+//     const { user } = useAuthContext();
+//     const user_kk = JSON.parse(localStorage.getItem('user'))
+//     let history = useNavigate();
 
-  useEffect(() => {
-    // const fetchSongs = async () => {
-    //   const response = await fetch("/api/songs", {
-    //     headers: {
-    //       Authorization: `Bearer ${user.token}`,
-    //     },
-    //   });
-    //   const json = await response.json();
-    //   if (response.ok) {
-    //     dispatch({ type: "SET_SONGS", payload: json });
-    //   }
-    // };
-    // if (user) {
-    //   fetchSongs();
-    // }
-  }, [dispatch, user]);
-  return (
-    // <div className="home">
-    //   <div className="songs">
-    //     {songs && songs.map((song) => <SongsGrid key={song._id} song={song} />)}
-    //   </div>
-    // </div>
-    <div className="home">
-      <div className="songs">Hello</div>
+
+
+function Home() {
+    const [count, setCount] = useState(0);
+    const { songs, dispatch } = useSongsContext();
+    const { user } = useAuthContext();
+    const user_kk = JSON.parse(localStorage.getItem('user'));
+    const { setAlbum, error, isLoading } = useAlbum();
+
+    useEffect (() => {
+      setAlbum("63311427bdccce7aead4c6db");
+    },[]
+    )
+
+    return (
+    <div>
+      <div> 
+        <MyAlbumComp/>
+        <AllAlbumComp/> 
+      </div>
     </div>
-  );
-};
+        );
+    };
 
-export default Home;
+    export default Home;
+    //test 
+    
+      

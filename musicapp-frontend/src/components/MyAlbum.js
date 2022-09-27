@@ -1,5 +1,5 @@
-import React from 'react'
-import { useEffect, useState } from 'react';
+import React from "react";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -10,7 +10,6 @@ function MyAlbum() {
   const { id } = useParams();
   const album_id = id;
 
-
   const url = "https://spitifo.s3.amazonaws.com/";
 
   const [songs, setSongs] = useState([]);
@@ -20,7 +19,6 @@ function MyAlbum() {
 
   useEffect(() => {
     const fetchCover = async () => {
-
       const response = await fetch(`/api/album/${album_id}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -31,7 +29,6 @@ function MyAlbum() {
 
       if (response.ok) {
         setAlbum(json);
-
       }
     };
     if (user) {
@@ -52,14 +49,12 @@ function MyAlbum() {
 
       if (response.ok) {
         setSongs(json);
-
       }
     };
     if (user) {
       fetchSongs();
     }
   }, [setSongs, user]);
-
 
   const handleDelete = async (_id) => {
     const response = await fetch(`/api/songs/${_id}`, {
@@ -103,36 +98,30 @@ function MyAlbum() {
             <table className="table table-striped table-hover mx-0">
 
               <tbody>
-                {songs && songs.map((song) => {
-                  return (
+                {songs &&
+                  songs.map((song) => {
+                    return (
+                      <tr >
+                        <td> {song.title} </td>
+                        <td>
+                          <audio controls>
+                            <source src={url + song.file_url} type="audio/mpeg"></source>
+                            Your browser does not support the audio element.
+                          </audio>
+                        </td>
 
-                    <tr >
-                      <td> {song.title} </td>
-                      <td>
-                        <audio controls>
-                          <source src={url + song.file_url} type="audio/mpeg"></source>
-                          Your browser does not support the audio element.
-                        </audio>
-                      </td>
+                        <td><button type="button" className="btn btn-warning" onClick={() => { handleDelete(song._id) }} >Delete</button>  </td>
 
-                      <td><button type="button" className="btn btn-warning" onClick={() => { handleDelete(song._id) }} >Delete</button>  </td>
+                        {/* <td> <button type="button" className="btn btn-info" onClick={() => { navigate(`/updateSong/${song._id}`) }}>Update </button></td> */}
 
-                      {/* <td> <button type="button" className="btn btn-info" onClick={() => { navigate(`/updateSong/${song._id}`) }}>Update </button></td> */}
-
-                    </tr>
-                  );
-                })}
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
-
           </div>
         </div>
-
       </div>
-
-
-
-
     </div>
   );
 }

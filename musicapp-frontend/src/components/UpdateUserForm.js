@@ -101,7 +101,6 @@ const UpdateUserForm = () => {
           <option value="USER">USER</option>
           <option value="ADMIN">ADMIN</option>
         </select>
-        <p>{role}</p>
         <label htmlFor="avatar">Avatar Url:</label>
         <input
           type="text"

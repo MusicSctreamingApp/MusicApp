@@ -159,3 +159,7 @@ label {
   margin-left: 10px;
 
 }
+ /* Admin Panel */
+.deletedRow {
+  display: none;
+}
