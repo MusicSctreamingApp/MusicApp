@@ -37,9 +37,11 @@ function App() {
             />
             <Route
               path="/AdminPanel"
-              element={user ? <AdminPanel /> : <Navigate to="/login" />}
+              element={
+                user && user.role ? <AdminPanel /> : <Navigate to="/login" />
+              }
             />
-           
+
             <Route
               path="/UpdateUser"
               element={
@@ -72,7 +74,7 @@ function App() {
             />*/}
           </Routes>
         </div>
-        {songsdata && <AudioPlayer songsdata={songsdata} />}
+        {songsdata && <AudioPlayer />}
       </BrowserRouter>
     </div>
   );
