@@ -80,34 +80,44 @@ function AddSongForm() {
   };
 
   return (
-    <div className="App app">
-      <h3 className="center">Add a new song</h3>
+    <div className="col-lg-12 col-xl-5 m-auto">
 
-      <form onSubmit={submit}>
-        <label htmlFor="title">Song Title:</label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          onChange={(e) => setTitle(e.target.value)}
-          value={title}
-          className={emptyFields.includes("title") ? "error" : ""}
-        />
+      <div class=" card text-black  bg-light bg-gradient">
+        <div class="col">
 
-        <label htmlFor="song">Song:</label>
-        <input
-          onChange={fileSelected}
-          type="file"
-          accept="audio/*"
-          className={emptyFields.includes("title") ? "error" : ""}
-        ></input>
 
-        <div className="center">
-          <button type="submit">Add New Song</button>
+          <h3 className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Add a new song</h3>
+
+          <form className="mx-1 mx-md-4 " onSubmit={submit}>
+            <div class="form-group">
+
+              <label className="form-label" htmlFor="title">Song Title:</label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
+                className={emptyFields.includes("title") ? "error" : "" + " form-control mb-2"}
+              />
+
+              <label className="form-label" htmlFor="song">Song:</label>
+              <input
+                onChange={fileSelected}
+                type="file"
+                accept="audio/*"
+                className={emptyFields.includes("title") ? "error" : "" + " form-control mb-2"}
+              ></input>
+
+              <div className="form-group text-center">
+                <button className="btn btn-warning btn-lg btn-block mt-4 mb-4" type="submit">Add</button>
+              </div>
+              {error && <div className="error">{error}</div>}
+            </div>
+          </form>
+          <div></div>
         </div>
-        {error && <div className="error">{error}</div>}
-      </form>
-      <div></div>
+      </div>
     </div>
   );
 }

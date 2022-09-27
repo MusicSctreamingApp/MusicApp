@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useState } from 'react';
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
+import styles from "../styles/MyAlbums.module.css";
 //import { useParams } from "react-router-dom";
 
 function AddAlbumForm() {
@@ -76,45 +77,53 @@ function AddAlbumForm() {
 
 
   return (
-    <div className="App app">
-      <h3 className="center" >Add a new album</h3>
+    <div className="col-lg-12 col-xl-5 m-auto">
 
-      <form onSubmit={submit}>
-        <label htmlFor="title">Album Title:</label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          onChange={(e) => setTitle(e.target.value)}
-          value={title}
-          className={emptyFields.includes("title") ? "error" : ""}
-        />
 
-        <label htmlFor="artist">Artist:</label>
-        <input
-          type="text"
-          name="artist"
-          id="artist"
-          onChange={(e) => setArtist(e.target.value)}
-          value={artist}
-          className={emptyFields.includes("artist") ? "error" : ""}
-        />
+      <div class=" card text-black  bg-light bg-gradient">
+        <div class="col">
 
-        <label htmlFor="cover">Cover Picture:</label>
-        <input onChange={fileSelected} type="file" accept="image/*"></input>
 
-        <div className="center">
+          <h3 className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" >Add a new album</h3>
 
-          <button type="submit">Add New Album</button>
+          <form className="mx-1 mx-md-4 " onSubmit={submit}>
+            <div class="form-group">
+              <label className="form-label" htmlFor="title">Album Title:</label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
+                className={emptyFields.includes("title") ? "error" : "" + " form-control mb-2"}
+              />
+
+              <label className="form-label" htmlFor="artist">Artist:</label>
+              <input
+                type="text"
+                name="artist"
+                id="artist"
+                onChange={(e) => setArtist(e.target.value)}
+                value={artist}
+                className={emptyFields.includes("artist") ? "error" : "" + " form-control mb-2"}
+              />
+
+              <label className="form-label" htmlFor="cover">Cover Picture:</label>
+              <input onChange={fileSelected} type="file" accept="image/*" className="form-control mb-2"></input>
+
+              <div className="form-group text-center">
+
+                <button type="submit" className="btn btn-warning btn-lg btn-block mt-4 mb-4">Add</button>
+              </div>
+              {error && <div className="error">{error}</div>}
+            </div>
+          </form>
+          <div>
+
+
+          </div>
         </div>
-        {error && <div className="error">{error}</div>}
-      </form>
-      <div>
-
-
       </div>
-
-
     </div>
   );
 }
