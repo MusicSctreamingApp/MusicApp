@@ -37,9 +37,11 @@ function App() {
             />
             <Route
               path="/AdminPanel"
-              element={user ? <AdminPanel /> : <Navigate to="/login" />}
+              element={
+                user && user.role ? <AdminPanel /> : <Navigate to="/login" />
+              }
             />
-           
+
             <Route
               path="/UpdateUser"
               element={
@@ -66,13 +68,9 @@ function App() {
               path="/addsong/:id"
               element={user ? <AddSongForm /> : <Navigate to="/login" />}
             />
-            {/* <Route
-              path='/addalbum'
-              element={!user ? <AddAlbumForm /> : <Navigate to='/' />}
-            />*/}
           </Routes>
         </div>
-        {songsdata && <AudioPlayer songsdata={songsdata} />}
+        {songsdata && <AudioPlayer />}
       </BrowserRouter>
     </div>
   );
