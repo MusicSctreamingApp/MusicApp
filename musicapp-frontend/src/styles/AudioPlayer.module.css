@@ -46,6 +46,7 @@
   grid-template-columns: 1fr auto;
   grid-template-rows: 1fr;
   align-items: center;
+  margin-right: 10px;
 }
 
 .forwardBackward {
@@ -86,7 +87,7 @@
 }
 .play {
   position: relative;
-  left: 2.5px;
+  left: 2px;
 }
 
 .currentTime,
