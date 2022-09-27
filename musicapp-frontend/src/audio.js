@@ -1,14 +1,14 @@
 exports.songsdata = [
   {
-    title: "Artist1 - Song1",
-    url: "https://cdn.simplecast.com/audio/cae8b0eb-d9a9-480d-a652-0defcbe047f4/episodes/af52a99b-88c0-4638-b120-d46e142d06d3/audio/500344fb-2e2b-48af-be86-af6ac341a6da/default_tc.mp3",
+    title: "Any Road",
+    file_url: "songs/731b23de-9fc6-4d42-80b8-f72d6dd74329.mp3",
   },
   {
-    title: "Artist2 - Song2",
-    url: "https://cdn.simplecast.com/audio/cae8b0eb-d9a9-480d-a652-0defcbe047f4/episodes/af52a99b-88c0-4638-b120-d46e142d06d3/audio/500344fb-2e2b-48af-be86-af6ac341a6da/default_tc.mp3",
+    title: "Any Road",
+    file_url: "songs/907c5e3a-9a5b-4134-8d0f-b45d2322d71f.mp3",
   },
   {
-    title: "Artist3 - Song3",
-    url: "https://cdn.simplecast.com/audio/cae8b0eb-d9a9-480d-a652-0defcbe047f4/episodes/af52a99b-88c0-4638-b120-d46e142d06d3/audio/500344fb-2e2b-48af-be86-af6ac341a6da/default_tc.mp3",
+    title: "Lose Yourself",
+    file_url: "songs/1bf377fb-799a-49ef-acfc-fedcb524aa3c.mp3",
   },
 ];

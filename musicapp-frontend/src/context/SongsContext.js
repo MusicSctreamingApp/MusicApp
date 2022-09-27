@@ -5,10 +5,14 @@ export const SongsContext = createContext();
 export const songsReducer = (state, action) => {
   switch (action.type) {
     case "SET_SONGS":
-      return {
-        songsdata: action.payload,
-        // songsdata: songsdata,
-      };
+      if (action.playload !== null) {
+        return {
+          songsdata: action.payload,
+        };
+      } else {
+        return { songsdata: songsdata };
+      }
+
     // keeping create / delete in case we implement Playlists
     case "CREATE_SONG":
       return {
