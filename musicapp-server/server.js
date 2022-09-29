@@ -93,20 +93,17 @@ app.use(
   upload.single("image"),
   async (req, res) => {
     const file = req.file;
-    console.log(file);
 
     const result = await uploadFile("images", file);
     await unlinkFile(file.path);
-    //console.log(result);
 
     const title = req.body.title;
     const artist = req.body.artist;
     const cover = result.Key;
     const user_id = req.user._id;
-    console.log(user_id);
 
-    //console.log(name);
-    //res.send({ imagePath: `${result.Key}` });
+
+
     let emptyFields = [];
     if (!title) {
       emptyFields.push("title");
