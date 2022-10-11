@@ -49,7 +49,6 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
-
 /*****************S3 bucket *****************************/
 app.use(express.urlencoded({ extended: true }));
 // Add headers before the routes are defined
