@@ -13,17 +13,17 @@ const {
 } = require("../controllers/albumControllers");
 //authentication middleware for all album routes
 const requireAuth = require("../middleware/requireAuth");
-router.use(requireAuth); //MAYBE NEED TO CHANGE SOME ROUTES WITHTOUT AUTH
+//router.use(requireAuth); //MAYBE NEED TO CHANGE SOME ROUTES WITHTOUT AUTH
 //routes
 router.get("/all", getAlbums);
 
-router.get("/user", getUserAlbums);
+router.get("/user", requireAuth, getUserAlbums);
 
-router.get("/:id", getAlbum);
+router.get("/:id", requireAuth, getAlbum);
 
-router.post("/", createAlbum);
+router.post("/", requireAuth, createAlbum);
 
-router.delete("/:id", deleteAlbum);
+router.delete("/:id", requireAuth, deleteAlbum);
 
-router.patch("/:id", updateAlbum);
+router.patch("/:id", requireAuth, updateAlbum);
 module.exports = router;

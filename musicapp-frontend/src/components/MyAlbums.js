@@ -78,7 +78,7 @@ function MyAlbums() {
               {albums &&
                 albums.map((album) => (
                   <div className={"col-4"}>
-                    <div className={styles.cardbox + " card mb-4 "}>
+                    <div className={styles.cardbox + " mb-4 "}>
                       <div className={styles.pcontainer}>
                         <img
                           src={url + album.cover}

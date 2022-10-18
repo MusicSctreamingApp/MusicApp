@@ -3,11 +3,10 @@ import { useSignup } from "../hooks/useSignup";
 
 const Signup = () => {
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [avatar, setAvatar] = useState('')
-    const [bio, setBio] = useState('')
-    const { signup, error, isLoading } = useSignup()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const { signup, error, isLoading } = useSignup()
+  const [emptyFields, setEmptyFields] = useState([]);
 
 
   const handleSubmit = async (e) => {
@@ -18,73 +17,47 @@ const Signup = () => {
 
 
   return (
-    <div className="container">
-      <form onSubmit={handleSubmit} className="signup">
-        <h3>Sign up</h3>
+    <div className="col-lg-12 col-xl-5 m-auto">
+      <div class=" card text-black  bg-light bg-gradient">
+        <div class="col">
+          <h3 className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" >Sign up</h3>
 
-        <div className="row w-25">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
+          <form className="mx-1 mx-md-4 " onSubmit={handleSubmit}>
+            <div class="form-group">
+              <label className="form-label" htmlFor="title">Email:</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                className={emptyFields.includes("email") ? "error" : "" + " form-control mb-2"}
+              />
+
+              <label className="form-label" htmlFor="artist">Password:</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                className={emptyFields.includes("password") ? "error" : "" + " form-control mb-2"}
+              />
+
+              <div className="form-group text-center">
+
+                <button disabled={isLoading} className="btn btn-warning btn-lg btn-block mt-4 mb-4">Sign In</button>
+              </div>
+              {error && <div className="error">{error}</div>}
+            </div>
+          </form>
+          <div>
+
+          </div>
         </div>
-        <div className="row w-25">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-        </div>
-        {/* <label htmlFor="avatar">Avatar:</label>
-
-            <input type="avatar" name="avatar" id="avatar"
-                onChange={(e) => setAvatar(e.target.value)}
-                value={avatar}
-             /> */}
-
-
-        {/* <form method="post" enctype="multipart/form-data" id="file_upload">
-          <p>Avatar：</p>
-          <img id="image-preview" />
-          <p>
-            <input
-              type="file"
-              id="file"
-              name="upload_image"
-              accept="image/gif, image/jpeg, image/png, image/jpg"
-            />
-            <input
-              type="button"
-              value="Upload Avatar"
-              onclick="save()"
-              // onChange={(e) => setAvatar(e.target.value)}
-              // value={avatar}
-            />
-          </p>
-          <p id="info"></p>
-        </form> */}
-
-        {/* <label htmlFor="bio">Bio:</label>
-        <input
-          type="bio"
-          name="bio"
-          id="bio"
-          onChange={(e) => setBio(e.target.value)}
-          value={bio}
-        /> */}
-        <div className="row w-25">
-          <button disabled={isLoading}>Sign In</button>
-          {error && <div className="error">{error}</div>}
-        </div>
-      </form>
+      </div>
     </div>
+
   );
 };
 

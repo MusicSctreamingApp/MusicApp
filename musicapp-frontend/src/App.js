@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 //pages & components
+import './App.css';
 import Navbar from "./components/NavbarHomePage";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -14,6 +15,7 @@ import UpdateUserForm from "./components/UpdateUserForm";
 import { AudioPlayer } from "./components/AudioPlayer";
 import { useSongsContext } from "./hooks/useSongsContext";
 
+
 function App() {
   const { user } = useAuthContext();
   const { songsdata } = useSongsContext();
@@ -25,7 +27,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={user ? <Home /> : <Navigate to="/login" />}
+              element={<Home />}
             />
             <Route
               path="/login"
@@ -70,7 +72,7 @@ function App() {
             />
           </Routes>
         </div>
-        {songsdata && <AudioPlayer />}
+        {/* {songsdata && <AudioPlayer />} */}
       </BrowserRouter>
     </div>
   );

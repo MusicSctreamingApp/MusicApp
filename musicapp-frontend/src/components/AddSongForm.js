@@ -12,7 +12,7 @@ function AddSongForm() {
   const { user } = useAuthContext();
 
   const [title, setTitle] = useState("");
-  const [file, setFile] = useState([]);
+  const [file, setFile] = useState();
   const [images, setImages] = useState([]);
   const [error, setError] = useState("");
   const [emptyFields, setEmptyFields] = useState([]);
@@ -30,7 +30,7 @@ function AddSongForm() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("albumId", albumId);
-    formData.append("image", image);
+    formData.append("image", file);
 
     const result = await axios.post(
       "http://localhost:4000/api/createsong/",
@@ -50,6 +50,10 @@ function AddSongForm() {
 
     if (!user) {
       setError("You must be logged in");
+      return;
+    }
+    if (!title || !file) {
+      setError("All fields must be filled");
       return;
     }
 
@@ -109,10 +113,12 @@ function AddSongForm() {
                 className={emptyFields.includes("title") ? "error" : "" + " form-control mb-2"}
               ></input>
 
+              {error && <div className="error">{error}</div>}
+
               <div className="form-group text-center">
                 <button className="btn btn-warning btn-lg btn-block mt-4 mb-4" type="submit">Add</button>
               </div>
-              {error && <div className="error">{error}</div>}
+
             </div>
           </form>
           <div></div>
@@ -124,90 +130,3 @@ function AddSongForm() {
 
 export default AddSongForm;
 
-// import { useState } from "react";
-// import { useSongsContext } from "../hooks/useSongsContext";
-// import { useAuthContext } from "../hooks/useAuthContext";
-
-// const AddSongForm = () => {
-//   const { dispatch } = useSongsContext();
-//   const { user } = useAuthContext();
-//   const [title, setTitle] = useState("");
-//   const [load, setLoad] = useState("");
-//   const [reps, setReps] = useState("");
-//   const [error, setError] = useState(null);
-//   const [emptyFields, setEmptyFields] = useState([]);
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     if (!user) {
-//       setError("You must be logged in");
-//       return;
-//     }
-//     const song = { title, load, reps };
-
-//     const response = await fetch("/api/songs", {
-//       method: "POST",
-//       body: JSON.stringify(song),
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${user.token}`,
-//       },
-//     });
-//     const json = await response.json();
-
-//     if (!response.ok) {
-//       setError(json.error);
-//       setEmptyFields(json.emptyFields);
-//     }
-//     if (response.ok) {
-//       setEmptyFields([]);
-//       setTitle("");
-//       setLoad("");
-//       setReps("");
-//       setError(null);
-//       dispatch({ type: "CREATE_SONG", payload: json });
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit} className="create">
-//       <h3>Add a new song</h3>
-
-//       <label htmlFor="title">Excercise Title:</label>
-//       <input
-//         type="text"
-//         name="title"
-//         id="title"
-//         onChange={(e) => setTitle(e.target.value)}
-//         value={title}
-//         className={emptyFields.includes("title") ? "error" : ""}
-//       />
-
-//       <label htmlFor="load">Excercise Load:</label>
-//       <input
-//         type="text"
-//         name="load"
-//         id="load"
-//         onChange={(e) => setLoad(e.target.value)}
-//         value={load}
-//         className={emptyFields.includes("load") ? "error" : ""}
-//       />
-
-//       <label htmlFor="reps">Excercise Reps:</label>
-//       <input
-//         type="text"
-//         name="reps"
-//         id="reps"
-//         onChange={(e) => setReps(e.target.value)}
-//         value={reps}
-//         className={emptyFields.includes("reps") ? "error" : ""}
-//       />
-
-//       <button>Add Song</button>
-//       {error && <div className="error">{error}</div>}
-//     </form>
-//   );
-// };
-
-// export default AddSongForm;

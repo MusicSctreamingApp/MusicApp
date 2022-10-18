@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "../styles/home.css";
 
-// not finish yet
+
 function MyAlbums() {
   let url = "https://spitifo.s3.amazonaws.com/";
 
@@ -38,24 +38,6 @@ function MyAlbums() {
     }
   }, [setAlbums, user]);
 
-  // const handleDelete = async (_id) => {
-  //   // need to to delete all songs by album_Id first.
-
-  //   const response = await fetch(`/api/album/${_id}`, {
-  //     method: "DELETE",
-  //     headers: {
-  //       Authorization: `Bearer ${user.token}`,
-  //     },
-  //   });
-
-  //   const json = await response.json();
-
-  //   if (response.ok) {
-  //     setAlbums(albums.filter((s) => s._id !== _id));
-  //   } else {
-  //     setError(json.error);
-  //   }
-  // };
 
   return (
     <div className="container">
@@ -70,12 +52,12 @@ function MyAlbums() {
               albums.map((album) => (
                 <div className="item2 bg2" key={album._id}>
                   <div className="playAlbum">
-                    <div className="play">
+                    {/* <div className="play">
                       <FaPlay
                         className="playMe"
                         onClick={() => playAlbum(album._id)}
                       />
-                    </div>
+                    </div> */}
                     <Link className="" to={"/myalbum/" + album._id}>
                       <img src={url + album.cover} className="img2" />
                       <div>

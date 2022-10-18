@@ -9,9 +9,10 @@ const Navbar = () => {
   const handleClick = () => {
     logout();
   };
+
   return (
     <header>
-      <div className="container">
+      <div className="container navbar fixed-top">
         <Link to="/">
           <h1>Music App</h1>
         </Link>
@@ -25,8 +26,14 @@ const Navbar = () => {
           )}
           {!user && (
             <div>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
+              <div>
+
+                <Link to="/login">Login</Link>
+              </div>
+              <div>
+
+                <Link to="/signup">Sign Up</Link>
+              </div>
             </div>
           )}
           {user && user.role === "ADMIN" && (

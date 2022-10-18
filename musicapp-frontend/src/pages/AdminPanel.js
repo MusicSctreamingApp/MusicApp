@@ -10,7 +10,7 @@ const AdminPanel = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const handleSideBarButtons = () => {};
+  const handleSideBarButtons = () => { };
 
   const handleDelete = async (_id) => {
     const response = await fetch(`/api/admin/${_id}`, {
@@ -59,7 +59,7 @@ const AdminPanel = () => {
             <ul className="nav flex-column">
               <li className="nav-item">
                 <a className="nav-link active" href="/AdminPanel">
-                  <span className= "h1" data-feather="home"></span>
+                  <span className="h1" data-feather="home"></span>
                   Dashboard
                 </a>
               </li>
@@ -72,16 +72,7 @@ const AdminPanel = () => {
                   Users
                 </button>
               </li>
-              <li className="nav-item">
-                <button
-                  type="button" className="btn-secondary btn-primary text-primary" data-toggle="button" aria-pressed="false" autocomplete="off"
-                  onClick={() => navigate("/UpdateUser")}
-                >
-                  <span data-feather="file"></span>
-                  Update User
-                </button>
 
-              </li>
             </ul>
           </div>
         </nav>
@@ -99,7 +90,7 @@ const AdminPanel = () => {
                   <th scope="col" className="text-light">Email</th>
                   <th scope="col" className="text-light">Role</th>
                   <th scope="col" className="text-light">Edit</th>
-                  <th scope="col" className="text-light">Banned</th>
+                  <th scope="col" className="text-light">Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -119,7 +110,7 @@ const AdminPanel = () => {
                       </td>
                       <td>
                         <button type="button" className="btn-secondary btn-primary text-primary" data-toggle="button" aria-pressed="false" autocomplete="off" onClick={() => handleDelete(users._id)}>
-                          Delete | Ban
+                          Delete
                         </button>
                       </td>
                     </tr>

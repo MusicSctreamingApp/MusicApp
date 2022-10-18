@@ -26,5 +26,12 @@ const albumSchema = new Schema({
     },
   ],
 });
+albumSchema.statics.addAlbum = async function (title, artist, cover, user_id) {
+  if (!title || !artist || !cover) {
+    throw Error("All fields must be filled");
+  }
+  const album = await this.create({ title, artist, cover, user_id });
+  return album;
+};
 
 module.exports = mongoose.model("Album", albumSchema);
