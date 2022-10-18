@@ -9,9 +9,7 @@ import styles from "../styles/MyAlbums.module.css";
 function MyAlbum() {
   const { id } = useParams();
   const album_id = id;
-
   const url = "https://spitifo.s3.amazonaws.com/";
-
   const [songs, setSongs] = useState([]);
   const [album, setAlbum] = useState([]);
   const { user } = useAuthContext();
@@ -98,6 +96,44 @@ function MyAlbum() {
             <table className="table table-striped table-hover mx-0">
 
               <tbody>
+                {/* just for displaying song when no user adding songs*/}
+                <tr >
+                  <td> Normal Song </td>
+                  <td>
+                    <audio controls>
+                      <source src={url + "songs/60043bb1-dbf2-4d68-958b-e8ce4700da26.mp3"} type="audio/mpeg"></source>
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                </tr>
+                <tr >
+                  <td> Normal Song </td>
+                  <td>
+                    <audio controls>
+                      <source src={url + "songs/60043bb1-dbf2-4d68-958b-e8ce4700da26.mp3"} type="audio/mpeg"></source>
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                </tr>
+                <tr >
+                  <td> Normal Song </td>
+                  <td>
+                    <audio controls>
+                      <source src={url + "songs/60043bb1-dbf2-4d68-958b-e8ce4700da26.mp3"} type="audio/mpeg"></source>
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                </tr>
+                <tr >
+                  <td> Normal Song </td>
+                  <td>
+                    <audio controls>
+                      <source src={url + "songs/60043bb1-dbf2-4d68-958b-e8ce4700da26.mp3"} type="audio/mpeg"></source>
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                </tr>
+
                 {songs &&
                   songs.map((song) => {
                     return (

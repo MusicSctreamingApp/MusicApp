@@ -30,7 +30,7 @@ function Home() {
   const user_kk = JSON.parse(localStorage.getItem("user"));
   const { playAlbum, error, isLoading } = useAlbum();
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   return (
     <div>

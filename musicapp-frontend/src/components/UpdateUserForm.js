@@ -3,12 +3,13 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UpdateUserForm = () => {
   const { user } = useAuthContext();
   const location = useLocation();
   const { userInfo } = location.state;
+  let navigate = useNavigate();
 
   useEffect(() => {
     set_id(userInfo._id);
@@ -67,6 +68,7 @@ const UpdateUserForm = () => {
       setRole("");
       setError(null);
       setResOk(true);
+      navigate(`/AdminPanel`);
     }
   };
   return (
@@ -128,6 +130,7 @@ const UpdateUserForm = () => {
             value={bio}
             className={emptyFields.includes("bio") ? "error" : ""}
           />
+
         </div>
         <div className="row w-25">
           <div className="center">

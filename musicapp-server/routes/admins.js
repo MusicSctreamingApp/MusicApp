@@ -18,6 +18,7 @@ router.get("/", getUsers);
 
 router.get("/:id", getUser);
 
+
 router.post("/", createAdmin);
 
 router.delete("/:id", deleteUser);

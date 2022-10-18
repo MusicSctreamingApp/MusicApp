@@ -4,6 +4,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import imgs from "../pages/assets/logo-white.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import ReactDOM from "react-dom/client";
 
 const Navbar = () => {
   const { logout } = useLogout();
@@ -12,60 +13,32 @@ const Navbar = () => {
   const handleClick = () => {
     logout();
   };
+
   return (
-    // <header>
-    //    {/* <div className="container">  */}
-    //   <div className="home">
-    //   <div className="songs">
-    //     <Link to="/">
-    //       <img src={imgs} className="img1" />
-    //     </Link>
-    //     <nav>
-    //       {user && (
-    //         <div>
-    //           <span>{user.email}</span>
-    //           <Link to={"/myalbums"}> My Albums</Link>
-    //           <button onClick={handleClick}>Log Out</button>
-    //         </div>
-    //       )}
-    //       {!user && (
-    //         <div>
-    //           <Link to="/login">Login</Link>
-    //           <Link to="/signup">Sign Up</Link>
-    //         </div>
-    //       )}
-    //       {user && user.role === "ADMIN" && (
-    //         <div>
-    //           <Link to="/AdminPanel">Admin Panel</Link>
-    //         </div>
-    //       )}
-    //     </nav>
-    //   </div>
-    //   </div>
-    //    {/* </div>  */}
-    // </header>
-    <div className="container-fluid">
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div className="container-fluid fixed-top">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-0 py-3">
         {/* <a className="navbar-brand" href="#">Navbar</a> */}
+
         <Link to="/">
           <img src={imgs} className="img1" />
         </Link>
-        {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span className="navbar-toggler-icon"></span>
-  </button> */}
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse  justify-content-center" id="navbarSupportedContent">
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
+          <ul className="nav navbar-nav mr-auto gap-2 justify-content-end">
             <li className="nav-item active">
-              <a className="nav-link" href="#">
-                <Link to="/">Home</Link> <span className="sr-only"></span>
+              <a className="nav-link pe-4" href="#">
+                <Link className="fs-4" to="/">Home</Link> <span className="sr-only"></span>
               </a>
             </li>
 
             {user && user.role === "ADMIN" && (
               <li className="nav-item active">
                 <a className="nav-link" href="#">
-                  <Link to={"/AdminPanel"}>Admin Panel </Link>{" "}
+                  <Link className="fs-4 pe-4" to={"/AdminPanel"}>Admin Panel </Link>{" "}
                   <span className="sr-only"></span>
                 </a>
               </li>
@@ -75,11 +48,11 @@ const Navbar = () => {
               <li className="nav-item">
                 <a className="nav-link" href="#">
                   <div className="align-items-right">
-                    <span>{user.email}</span>
-                    <Link to={"/myalbums"}> My Albums</Link>
+                    <Link className="pe-4 fs-4" to={"/myalbums"}> My Albums</Link>
+                    <span className="pe-4 fs-4">{user.email}</span>
                     <button
                       type="button"
-                      className="btn btn-secondary btn-sm active"
+                      className="btn btn-secondary btn-sm active fs-4"
                       onClick={handleClick}
                     >
                       Log Out
@@ -89,14 +62,27 @@ const Navbar = () => {
               </li>
             )}
             {!user && (
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  <div className="align-items-right">
-                    <Link to={"/login"}> Login</Link>
-                    <Link to={"/signup"}> Signup</Link>
-                  </div>
-                </a>
-              </li>
+              <div className="row">
+                <li className="nav-item col">
+                  <a className="nav-link" href="#">
+                    <div className="align-items-right">
+                      <Link className="fs-4 pe-4" to={"/login"}> Login</Link>
+
+                    </div>
+
+                  </a>
+                </li>
+                <li className="nav-item col">
+                  <a className="nav-link" href="#">
+                    <div className="align-items-right">
+
+                      <Link className="fs-4 pe-4" to={"/signup"}> Signup</Link>
+                    </div>
+
+                  </a>
+                </li>
+              </div>
+
             )}
           </ul>
         </div>

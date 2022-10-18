@@ -12,6 +12,7 @@ const requireAuth = require("../middleware/requireAuth");
 //login
 router.post("/login", loginUser);
 
+
 //signup
 router.post("/signup", signupUser);
 //Trying to use middleware in only certain routes for user here

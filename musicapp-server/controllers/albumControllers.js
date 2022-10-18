@@ -10,11 +10,18 @@ const getAlbums = async (req, res) => {
 };
 // GET USER'S albums
 const getUserAlbums = async (req, res) => {
-  const user_id = req.user._id;
-  //the find method CAN be FILTERED...or sorted: here createdAt: -1 = Desc
-  const albums = await Album.find({ user_id }).sort({ createdAt: -1 });
+  try {
 
-  res.status(200).json(albums);
+
+    const user_id = req.user._id;
+    //the find method CAN be FILTERED...or sorted: here createdAt: -1 = Desc
+    const albums = await Album.find({ user_id }).sort({ createdAt: -1 });
+
+    res.status(200).json(albums);
+  }
+  catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 //GET SINGLE Album by id
 const getAlbum = async (req, res) => {
